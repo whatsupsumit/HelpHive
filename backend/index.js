@@ -12,7 +12,11 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Help Hive API!");
+  res.send("Help Hive!");
+});
+
+app.get("/api", (req, res) => {
+  res.send("This is Help Hive API!");
 });
 
 app.use(cookieParser());
