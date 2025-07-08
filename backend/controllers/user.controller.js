@@ -1,3 +1,4 @@
+import cloudinary from "../config/cloudinary-config.js";
 import User from "../models/user.model.js";
 import { generateToken } from "../utils/genToken.js";
 import bcrypt from "bcrypt";
@@ -82,5 +83,34 @@ export const getUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: "Getting User Details Failed" });
     console.log("Error in get user component", error);
+  }
+};
+
+export const updateUser = async (req, res) => {
+  const { name, pic } = req.body;
+  try {
+    const userId = req.user.id;
+    if (!userId) {
+      return res.status(400).json({ message: "User not authenticated" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (name) user.name = name;
+    if (pic) {
+      const imageUploader = await cloudinary.uploader.upload(pic);
+      user.pic = imageUploader.secure_url;
+    }
+
+    await user.save();
+    return res.status(200).json({
+      message: "User details updated successfully",
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Updating User Details Failed" });
+    console.log("Error in update user component", error);
   }
 };
