@@ -33,7 +33,6 @@ export const addIssue = async (req, res) => {
 
     return res.status(201).json({
       message: "Issue added successfully",
-      issue,
     });
   } catch (error) {
     console.error("Error adding issue:", error);
@@ -66,7 +65,6 @@ export const addingIssue = async (req, res) => {
     }
     return res.status(200).json({
       message: "Issue updated successfully",
-      issue,
     });
   } catch (error) {
     console.error("Error adding to issue:", error);
@@ -93,7 +91,6 @@ export const resolveIssue = async (req, res) => {
     await issue.save();
     return res.status(200).json({
       message: "Issue resolved successfully",
-      issue,
     });
   } catch (error) {
     console.error("Error resolving issue:", error);
@@ -103,7 +100,12 @@ export const resolveIssue = async (req, res) => {
 
 export const getAllIssue = async (req, res) => {
   try {
-    const issues = await Issue.find().populate("userId").populate("users");
+    const issues = await Issue.find({
+      isResolved: false,
+    })
+      .populate("userId")
+      .populate("users")
+      .sort({ createdAt: -1 });
     return res.status(200).json(issues);
   } catch (error) {
     console.error("Error fetching issues:", error);
@@ -126,6 +128,22 @@ export const getIssue = async (req, res) => {
     return res.status(200).json(issue);
   } catch (error) {
     console.error("Error fetching issue:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getlimitedissues = async (req, res) => {
+  try {
+    const issues = await Issue.find({
+      isResolved: false,
+    })
+      .populate("userId")
+      .populate("users")
+      .sort({ createdAt: -1 })
+      .limit(10);
+    return res.status(200).json(issues);
+  } catch (error) {
+    console.error("Error fetching issues:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
