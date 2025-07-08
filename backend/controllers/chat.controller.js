@@ -1,5 +1,6 @@
 import cloudinary from "../config/cloudinary-config.js";
 import Chat from "../models/chat.model.js";
+import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
 
 export const sendMessage = async (req, res) => {
@@ -34,6 +35,16 @@ export const sendMessage = async (req, res) => {
 
     if (!newMessage) {
       return res.status(500).json({ message: "Failed to send message" });
+    }
+
+    const newNotification = await Notification.create({
+      senderId,
+      receiverId,
+      chat: newMessage._id,
+    });
+
+    if (!newNotification) {
+      return res.status(500).json({ message: "Failed to create notification" });
     }
 
     return res.status(201).json({ message: "Message sent successfully" });

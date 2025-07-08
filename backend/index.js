@@ -7,6 +7,7 @@ import userRouter from "./routes/user.route.js";
 import helpRouter from "./routes/help.route.js";
 import issueRouter from "./routes/issue.route.js";
 import chatRouter from "./routes/chat.route.js";
+import notificationRouter from "./routes/notification.route.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -50,6 +51,7 @@ app.use("/api/users", userRouter);
 app.use("/api/helps", helpRouter);
 app.use("/api/issues", issueRouter);
 app.use("/api/chats", chatRouter);
+app.use("/api/notifications", notificationRouter);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
