@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #212121;
+    color: white;
+  }
+}
+
+@layer utilities {
+  .bg-radial-gradient {
+    background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+  }
+  
+  .border-3 {
+    border-width: 3px;
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .backdrop-blur-strong {
+    backdrop-filter: blur(10px);
+  }
+
+  /* Custom scrollbar styles for modal */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, rgba(254, 243, 199, 0.4), rgba(253, 230, 138, 0.4));
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, rgba(251, 191, 36, 0.8), rgba(251, 146, 60, 0.8));
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, rgba(251, 191, 36, 1), rgba(251, 146, 60, 1));
+  }
+  
+  .scrollbar-corner-transparent::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
