@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/mongoose-connection.js";
+import cors from "cors";
 
 import userRouter from "./routes/user.route.js";
 import helpRouter from "./routes/help.route.js";
@@ -11,6 +12,13 @@ import notificationRouter from "./routes/notification.route.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Help Hive!");

@@ -1,0 +1,78 @@
+import { create } from "zustand";
+import axiosInstance from "../utils/axiosInstance";
+
+const useIssueStore = create((set) => ({
+  isAddingIssue: false,
+  isResolvingIssue: false,
+  limitedIssues: [],
+  allIssues: [],
+  emergencyIssues: [],
+
+  addIssue: async (data) => {
+    set({ isAddingIssue: true });
+    try {
+      await axiosInstance.post("/issues/addissue", data);
+    } catch (error) {
+      console.error("Error adding issue:", error);
+      throw error;
+    } finally {
+      set({ isAddingIssue: false });
+    }
+  },
+
+  moreIssue: async (issueId) => {
+    set({ isAddingIssue: true });
+    try {
+      await axiosInstance.put(`/issues/addingissue/${issueId}`);
+    } catch (error) {
+      console.error("Error adding to issue:", error);
+      throw error;
+    } finally {
+      set({ isAddingIssue: false });
+    }
+  },
+
+  resolveIssue: async (issueId) => {
+    set({ isResolvingIssue: true });
+    try {
+      await axiosInstance.patch(`/issues/resolveissue/${issueId}`);
+    } catch (error) {
+      console.error("Error resolving issue:", error);
+      throw error;
+    } finally {
+      set({ isResolvingIssue: false });
+    }
+  },
+
+  getLimitedIssues: async () => {
+    try {
+      const res = await axiosInstance.get("/issues/getlimitedissues");
+      set({ limitedIssues: res.data.issues });
+    } catch (error) {
+      console.error("Error fetching limited issues:", error);
+      throw error;
+    }
+  },
+
+  getEmergencyIssues: async () => {
+    try {
+      const res = await axiosInstance.get("/issues/getemergencyissues");
+      set({ emergencyIssues: res.data.issues });
+    } catch (error) {
+      console.error("Error fetching emergency issues:", error);
+      throw error;
+    }
+  },
+
+  getAllIssues: async () => {
+    try {
+      const res = await axiosInstance.get("/issues/getallissues");
+      set({ allIssues: res.data.issues });
+    } catch (error) {
+      console.error("Error fetching all issues:", error);
+      throw error;
+    }
+  },
+}));
+
+export default useIssueStore;

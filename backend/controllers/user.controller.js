@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
     }
 
     await generateToken(newUser._id, res);
-    res.status(200).json({ message: "User created successfully" });
+    res.status(200).json(newUser);
   } catch (error) {
     res.status(400).json({ message: "User Registration Failed" });
     console.log("Error in register user component", error);
@@ -55,7 +55,7 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
     await generateToken(existingUser._id, res);
-    res.status(200).json({ message: "User logged in successfully" });
+    res.status(200).json(existingUser);
   } catch (error) {
     res.status(400).json({ message: "User Login Failed" });
     console.log("Error in login user component", error);
@@ -112,7 +112,7 @@ export const updateUser = async (req, res) => {
 
     await user.save();
     return res.status(200).json({
-      message: "User details updated successfully",
+      user,
     });
   } catch (error) {
     res.status(400).json({ message: "Updating User Details Failed" });
