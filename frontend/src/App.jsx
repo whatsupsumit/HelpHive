@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import RecentActivity from './components/RecentActivity';
 import HeroSection from './components/HeroSection'
 import HelpSection from './components/HelpSection'
 import AboutUs from './components/AboutUs'
@@ -18,6 +20,7 @@ const HomePage = ({ onLearnMore }) => {
         onLearnMore={onLearnMore}
       />
       <HelpSection />
+<RecentActivity />
     </>
   );
 };
@@ -31,27 +34,31 @@ const AppContent = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <Routes>
-        <Route 
-          path="/" 
-          element={
-            <HomePage 
-              onLearnMore={handleLearnMore}
-            />
-          } 
-        />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/help" element={<Help />} />
-        <Route path="/offer-help" element={<OfferHelp />} />
-        <Route path="/report" element={<Report />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        {/* Catch all route - redirect to home */}
-        <Route path="*" element={<HomePage onLearnMore={handleLearnMore} />} />
-      </Routes>
+      <main className="flex-grow">
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <HomePage 
+                onLearnMore={handleLearnMore}
+              />
+            } 
+          />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/offer-help" element={<OfferHelp />} />
+          <Route path="/report" element={<Report />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          {/* Catch all route - redirect to home */}
+          <Route path="*" element={<HomePage onLearnMore={handleLearnMore} />} />
+        </Routes>
+      </main>
+      
+      <Footer />
     </div>
   );
 };
