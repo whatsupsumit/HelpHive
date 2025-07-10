@@ -87,7 +87,7 @@ export const getUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { name, pic } = req.body;
+  const { name, pic, email, password } = req.body;
   try {
     const userId = req.user.id;
     if (!userId) {
@@ -103,6 +103,11 @@ export const updateUser = async (req, res) => {
     if (pic) {
       const imageUploader = await cloudinary.uploader.upload(pic);
       user.pic = imageUploader.secure_url;
+    }
+    if (email) user.email = email;
+    if (password) {
+      const genSalt = await bcrypt.genSaltSync(10);
+      user.password = await bcrypt.hash(password, genSalt);
     }
 
     await user.save();
