@@ -14,7 +14,7 @@ const HeroSection = ({ onLearnMore }) => {
         <div 
           className="w-full h-full bg-cover bg-top bg-no-repeat"
           style={{
-            backgroundImage: `url('/howhelp.png')`,
+            backgroundImage: `url('/helphelp.png')`,
             filter: 'brightness(0.85) contrast(1.15) saturate(1.3)'
           }}
         />
