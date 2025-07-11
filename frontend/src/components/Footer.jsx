@@ -1,5 +1,6 @@
 import React from 'react';
-import { Heart, Users, Mail, Phone, MapPin, Globe, Linkedin, Twitter, Instagram } from 'lucide-react';
+import { Heart, Users, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -34,51 +35,63 @@ const Footer = () => {
               <li><a href="/" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Home</a></li>
               <li><a href="/about" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">About Us</a></li>
               <li><a href="/help" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Get Help</a></li>
-              <li><a href="/offer" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Offer Help</a></li>
+              <li><a href="/report" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Report Issue</a></li>
             </ul>
           </div>
 
-          {/* Community */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-gray-800 border-b-2 border-orange-200 pb-2">
-              Community
-            </h4>
-            <ul className="space-y-2">
-              <li><a href="/report" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Report Issues</a></li>
-              <li><a href="/auth" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Become a Volunteer</a></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
+          {/* Get in Touch - Both Creators */}
+          <div className="space-y-4 lg:col-span-2">
             <h4 className="text-lg font-semibold text-gray-800 border-b-2 border-orange-200 pb-2">
               Get in Touch
             </h4>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-sm text-gray-600">
-                <Mail className="h-4 w-4 text-orange-500" />
-                <span>hello@helphive.in</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Creator 1 */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <Mail className="h-4 w-4 text-orange-500" />
+                  <span>sksumitboss123@gmail.com</span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <Phone className="h-4 w-4 text-orange-500" />
+                  <span>+91 77194 32195</span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <MapPin className="h-4 w-4 text-orange-500" />
+                  <span>Bangalore, Karnataka, India</span>
+                </div>
+                {/* Social Media Icons */}
+                <div className="flex space-x-3 pt-2">
+                  <a href="https://www.linkedin.com/in/sumitkumarrrr/" target='_blank' className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                    <Linkedin className="h-4 w-4 text-orange-600" />
+                  </a>
+                  <a href="https://github.com/whatsupsumit" target='_blank' className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                    <FaGithub className="h-4 w-4 text-orange-600" />
+                  </a>
+                </div>
               </div>
-              <div className="flex items-center space-x-3 text-sm text-gray-600">
-                <Phone className="h-4 w-4 text-orange-500" />
-                <span>+91 98765 43210</span>
-              </div>
-              <div className="flex items-center space-x-3 text-sm text-gray-600">
-                <MapPin className="h-4 w-4 text-orange-500" />
-                <span>Bangalore, Karnataka, India</span>
-              </div>
-              
-              {/* Social Media Icons */}
-              <div className="flex space-x-3 pt-2">
-                <a href="#" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
-                  <Twitter className="h-4 w-4 text-orange-600" />
-                </a>
-                <a href="#" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
-                  <Instagram className="h-4 w-4 text-orange-600" />
-                </a>
-                <a href="#" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
-                  <Linkedin className="h-4 w-4 text-orange-600" />
-                </a>
+              {/* Creator 2 */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <Mail className="h-4 w-4 text-orange-500" />
+                  <span>rnishant721@gmail.com</span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <Phone className="h-4 w-4 text-orange-500" />
+                  <span>+91 80767 61927</span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm text-gray-600">
+                  <MapPin className="h-4 w-4 text-orange-500" />
+                  <span>New Delhi, India</span>
+                </div>
+                {/* Social Media Icons */}
+                <div className="flex space-x-3 pt-2">
+                  <a href="https://www.linkedin.com/in/nishantraj1234" target="_blank" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                    <Linkedin className="h-4 w-4 text-orange-600" />
+                  </a>
+                  <a href="https://github.com/NishantRaj278" target="_blank" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                    <FaGithub className="h-4 w-4 text-orange-600" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -121,11 +134,6 @@ const Footer = () => {
             </div>
             <div className="text-sm text-gray-600">
               © 2024 HelpHive. All rights reserved.
-            </div>
-            <div className="flex items-center space-x-4 text-xs text-gray-500">
-              <a href="#privacy" className="hover:text-orange-600 transition-colors">Privacy Policy</a>
-              <span>•</span>
-              <a href="#terms" className="hover:text-orange-600 transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>

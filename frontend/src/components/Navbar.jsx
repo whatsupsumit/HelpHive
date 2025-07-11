@@ -1,13 +1,32 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect} from 'react';
+import useAuthStore from '../store/userAuth';
 
 const Navbar = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const {authUser, getUser, logoutUser} = useAuthStore();
 
-  // Close dropdown when clicking outside
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!authUser) {
+        await getUser();
+      }
+    };
+    
+    fetchUser();
+  }, [getUser, authUser]);
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    if (!authUser) return;
+    await logoutUser();
+    setIsProfileDropdownOpen(false);
+    setIsMobileMenuOpen(false);
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -107,25 +126,36 @@ const Navbar = () => {
             
             {/* Auth Links with Enhanced Styling */}
             <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-red-400/40">
-              <Link 
-                to="/auth"
-                className="relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 text-yellow-400 hover:text-orange-400 px-3 py-1 rounded-lg hover:bg-gradient-to-r hover:from-yellow-500/20 hover:to-orange-500/20 backdrop-blur-sm border border-transparent hover:border-orange-400/30 hover:scale-105 shadow-lg hover:shadow-orange-500/25"
-              >
-                <span className="relative z-10 font-semibold">Signin / Signup</span>
-                <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 transform transition-transform duration-300 ${
-                  isActive('/auth') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                }`}></div>
-              </Link>
+              {!authUser && (
+                <Link 
+                  to="/auth"
+                  className="relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 text-yellow-400 hover:text-orange-400 px-3 py-1 rounded-lg hover:bg-gradient-to-r hover:from-yellow-500/20 hover:to-orange-500/20 backdrop-blur-sm border border-transparent hover:border-orange-400/30 hover:scale-105 shadow-lg hover:shadow-orange-500/25"
+                >
+                  <span className="relative z-10 font-semibold">Signin / Signup</span>
+                  <div className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 transform transition-transform duration-300 ${
+                    isActive('/auth') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`}></div>
+                </Link>
+              )}
 
               {/* Profile Dropdown */}
-              <div className="relative" ref={dropdownRef}>
+              {authUser && (
+                <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 transition-all duration-300 border-2 border-red-400/30 hover:border-red-400/60 hover:scale-110 shadow-lg hover:shadow-red-500/25"
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500 transition-all duration-300 border-2 border-red-400/30 hover:border-red-400/60 hover:scale-110 shadow-lg hover:shadow-red-500/25 overflow-hidden"
                 >
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+                  {authUser?.pic ? (
+                    <img 
+                      src={authUser.pic} 
+                      alt={authUser.name || "User"} 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  )}
                 </button>
 
                 {/* Dropdown Menu */}
@@ -141,13 +171,26 @@ const Navbar = () => {
                       {/* Profile header */}
                       <div className="px-4 py-2 border-b border-red-400/20 mb-2">
                         <div className="flex items-center space-x-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center">
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center overflow-hidden">
+                            {authUser?.profilePic ? (
+                              <img 
+                                src={authUser.profilePic} 
+                                alt={authUser.name || "User"} 
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                            )}
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-white">Welcome</p>
+                            <p className="text-sm font-medium text-white">
+                              Welcome{authUser?.name ? `, ${authUser.name}` : ''}
+                            </p>
+                            {authUser?.email && (
+                              <p className="text-xs text-gray-400">{authUser.email}</p>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -169,11 +212,7 @@ const Navbar = () => {
                       </Link>
                       
                       <button
-                        onClick={() => {
-                          setIsProfileDropdownOpen(false);
-                          // Add logout logic here
-                          console.log('Logout clicked');
-                        }}
+                        onClick={handleLogout}
                         className="flex items-center w-full px-4 py-3 text-sm text-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-red-500/20 hover:to-pink-500/10 transition-all duration-300 group relative overflow-hidden"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 to-pink-500/0 group-hover:from-red-500/10 group-hover:to-pink-500/5 transition-all duration-300"></div>
@@ -190,6 +229,7 @@ const Navbar = () => {
                   </div>
                 )}
               </div>
+              )}
             </div>
           </div>
 
@@ -257,38 +297,50 @@ const Navbar = () => {
               
               {/* Mobile Auth Links */}
               <div className="border-t border-red-400/30 pt-4 mt-4 space-y-2">
-                <Link 
-                  to="/auth"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-yellow-400 hover:text-orange-400 hover:bg-yellow-500/20 transition-all duration-300 font-semibold"
-                >
-                  Login / Signup
-                </Link>
+                {!authUser && (
+                  <Link 
+                    to="/auth"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-yellow-400 hover:text-orange-400 hover:bg-yellow-500/20 transition-all duration-300"
+                  >
+                    Login / Signup
+                  </Link>
+                )}
                 
                 {/* Mobile Profile Links */}
-                <Link 
-                  to="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-white hover:bg-red-500/20 transition-all duration-300"
-                >
-                  <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  View Profile
-                </Link>
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    // Add logout logic here
-                    console.log('Logout clicked');
-                  }}
-                  className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-white hover:bg-red-500/20 transition-all duration-300"
-                >
-                  <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  Logout
-                </button>
+                {authUser && (
+                  <>
+                    <Link 
+                      to="/dashboard"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-white hover:bg-red-500/20 transition-all duration-300"
+                    >
+                      <div className="w-5 h-5 mr-3 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center overflow-hidden">
+                        {authUser.pic ? (
+                          <img 
+                            src={authUser.pic} 
+                            alt={authUser.name || "User"} 
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                        )}
+                      </div>
+                      <span>View Profile</span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-gray-200 hover:text-white hover:bg-red-500/20 transition-all duration-300"
+                    >
+                      <svg className="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      Logout
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

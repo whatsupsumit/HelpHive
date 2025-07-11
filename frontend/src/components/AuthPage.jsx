@@ -1,15 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/userAuth';
 
 const AuthPage = () => {
+  const { registerUser, loginUser, authUser} = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
+
+  // Handle navigation when user is authenticated
+  useEffect(() => {
+    if (authUser) {
+      navigate('/');
+    }
+  }, [authUser, navigate]);
+
+  if (authUser) {
+    return null;
+  }
 
   const handleInputChange = (e) => {
     setFormData({
@@ -18,17 +30,19 @@ const AuthPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
-      console.log('Login submitted:', { email: formData.email, password: formData.password });
+      await loginUser({ email: formData.email, password: formData.password });
+      navigate('/');
     } else {
-      console.log('Signup submitted:', formData);
+      await registerUser({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      navigate('/');
     }
-    // Simulate successful authentication and redirect to dashboard
-    setTimeout(() => {
-      navigate('/dashboard');
-    }, 1000);
   };
 
   const toggleMode = () => {
@@ -37,8 +51,7 @@ const AuthPage = () => {
     setFormData({
       name: '',
       email: '',
-      password: '',
-      confirmPassword: ''
+      password: ''
     });
   };
 
@@ -256,34 +269,6 @@ const AuthPage = () => {
                     />
                     <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-green-500/10 to-emerald-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                   </div>
-                </div>
-
-                {/* Confirm Password Field - Only for Signup */}
-                <div 
-                  className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                    isLogin ? 'max-h-0 opacity-0' : 'max-h-20 opacity-100'
-                  }`}
-                >
-                  {!isLogin && (
-                    <div className="space-y-1">
-                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 drop-shadow-md">
-                        Confirm Password
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="password"
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          value={formData.confirmPassword}
-                          onChange={handleInputChange}
-                          className="w-full px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-300 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/30 focus:outline-none transition-all duration-200 hover:bg-white/15 shadow-lg"
-                          placeholder="Confirm your password"
-                          required={!isLogin}
-                        />
-                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-yellow-500/10 to-orange-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                      </div>
-                    </div>
-                  )}
                 </div>
 
                 {/* Submit Button */}

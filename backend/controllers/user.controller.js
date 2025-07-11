@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
     }
 
     await generateToken(newUser._id, res);
-    res.status(200).json(newUser);
+    res.status(200).json({ user: newUser });
   } catch (error) {
     res.status(400).json({ message: "User Registration Failed" });
     console.log("Error in register user component", error);
@@ -55,7 +55,7 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
     await generateToken(existingUser._id, res);
-    res.status(200).json(existingUser);
+    res.status(200).json({ user: existingUser });
   } catch (error) {
     res.status(400).json({ message: "User Login Failed" });
     console.log("Error in login user component", error);
@@ -79,7 +79,7 @@ export const getUser = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "User not authenticated" });
     }
-    return res.status(200).json(user);
+    return res.status(200).json({ user });
   } catch (error) {
     res.status(400).json({ message: "Getting User Details Failed" });
     console.log("Error in get user component", error);
@@ -101,8 +101,18 @@ export const updateUser = async (req, res) => {
 
     if (name) user.name = name;
     if (pic) {
-      const imageUploader = await cloudinary.uploader.upload(pic);
-      user.pic = imageUploader.secure_url;
+      // Option 1: Use Cloudinary (requires valid credentials)
+      try {
+        const imageUploader = await cloudinary.uploader.upload(pic);
+        user.pic = imageUploader.secure_url;
+      } catch (cloudinaryError) {
+        console.log(
+          "Cloudinary error, storing base64 instead:",
+          cloudinaryError
+        );
+        // Option 2: Fallback to storing base64 directly (not recommended for production)
+        user.pic = pic;
+      }
     }
     if (email) user.email = email;
     if (password) {

@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema(
     },
     pic: {
       type: String,
+      default:
+        "https://res.cloudinary.com/diert8zst/image/upload/v1752211729/blank-profile-picture-973460_1280_h29frs.webp",
     },
     email: {
       type: String,

@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/userAuth';
 
 const HeroSection = ({ onLearnMore }) => {
   const navigate = useNavigate();
+  const authUser = useAuthStore((state) => state.authUser);
 
   const handleJoinCommunity = () => {
-    navigate('/help');
+    navigate('/auth');
   };
 
   return (
@@ -60,16 +62,18 @@ const HeroSection = ({ onLearnMore }) => {
           {/* Simple Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-12 max-w-md mx-auto">
             {/* Join Community Button */}
-            <button 
-              onClick={handleJoinCommunity}
-              className="group relative bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 shadow-lg border border-white/20 backdrop-blur-sm hover:scale-105 hover:shadow-xl"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
-              <div className="relative flex items-center space-x-2">
-                <span className="text-lg">🏠</span>
-                <span className="text-sm font-bold tracking-wide">Join Community</span>
-              </div>
-            </button>
+            {authUser === null && (
+              <button 
+                onClick={handleJoinCommunity}
+                className="group relative bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 shadow-lg border border-white/20 backdrop-blur-sm hover:scale-105 hover:shadow-xl"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
+                <div className="relative flex items-center space-x-2">
+                  <span className="text-lg">🏠</span>
+                  <span className="text-sm font-bold tracking-wide">Join Community</span>
+                </div>
+              </button>
+            )}
 
             {/* Learn More Button */}
             <button

@@ -1,23 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useAuthStore from '../store/userAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   // State management
+  const {authUser, updateUser} = useAuthStore();
+  const navigate = useNavigate();
+  
+
   const [profileData, setProfileData] = useState({
-    name: "Alex Thompson",
-    email: "alex.thompson@helphive.com",
-    profileImage: null
+    name: "",
+    email: "",
+    profileImage: null,
   });
   
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    newPassword: ''
   });
+  
+
   
   const [currentView, setCurrentView] = useState('notifications'); // 'notifications' or 'details'
   const [selectedCard, setSelectedCard] = useState(null);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+
+  // Initialize profile data when authUser changes
+  useEffect(() => {
+    if (authUser) {
+      setProfileData({
+        name: authUser.name || "",
+        email: authUser.email || "",
+        profileImage: authUser.pic || null,
+      });
+    }
+  }, [authUser]);
+
+  // Handle navigation when user is not authenticated
+  useEffect(() => {
+    if (!authUser) {
+      navigate('/auth');
+    }
+  }, [authUser, navigate]);
+
+  if (!authUser) {
+    return null;
+  }
   
   // Dummy data for overview cards
   const statsData = [
@@ -213,29 +240,42 @@ const Dashboard = () => {
     }));
   };
 
-  const handleSaveProfile = () => {
-    // Simulate API call
-    console.log('Saving profile:', profileData);
-    setIsEditingProfile(false);
-    // Show success message
-    alert('Profile updated successfully!');
-  };
+  const handleSaveProfile = async () => {
+    try {
+      // Prepare the update data object
+      const updateData = {
+        name: profileData.name,
+        email: profileData.email,
+      };
 
-  const handleSavePassword = () => {
-    if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert('Passwords do not match!');
-      return;
+      // Add profile image if it exists and is a base64 string
+      if (profileData.profileImage && profileData.profileImage.startsWith('data:')) {
+        updateData.pic = profileData.profileImage;
+      }
+
+      // Add password if provided
+      if (passwordData.newPassword) {
+        if (passwordData.newPassword.length < 8) {
+          alert('Password must be at least 8 characters long!');
+          return;
+        }
+        updateData.password = passwordData.newPassword;
+      }
+
+
+      // Send single API call with all data
+      await updateUser(updateData);
+
+      // Reset password field and exit edit mode
+      setPasswordData({ newPassword: '' });
+      setIsEditingProfile(false);
+      
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      console.error('Error response:', error.response?.data);
+      alert(`Failed to update profile: ${error.response?.data?.message || error.message}`);
     }
-    if (passwordData.newPassword.length < 8) {
-      alert('Password must be at least 8 characters long!');
-      return;
-    }
-    
-    // Simulate API call
-    console.log('Password changed successfully');
-    setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
-    setShowPasswordModal(false);
-    alert('Password changed successfully!');
   };
 
   const handleCardClick = (cardId) => {
@@ -282,19 +322,21 @@ const Dashboard = () => {
                     {profileData.profileImage ? (
                       <img src={profileData.profileImage} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
-                      profileData.name.split(' ').map(n => n[0]).join('')
+                      profileData.name ? profileData.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U'
                     )}
                   </div>
-                  <button
-                    onClick={() => document.getElementById('profileImageInput').click()}
-                    className="absolute -bottom-2 -right-2 w-10 h-10 bg-white border-2 border-orange-300 rounded-full flex items-center justify-center hover:bg-orange-50 transition-all duration-200 shadow-md hover:scale-110 group-hover:border-orange-400"
-                    title="Change profile picture"
-                  >
-                    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </button>
+                  {isEditingProfile && (
+                    <button
+                      onClick={() => document.getElementById('profileImageInput').click()}
+                      className="absolute -bottom-2 -right-2 w-10 h-10 bg-white border-2 border-orange-300 rounded-full flex items-center justify-center hover:bg-orange-50 transition-all duration-200 shadow-md hover:scale-110 group-hover:border-orange-400"
+                      title="Change profile picture"
+                    >
+                      <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </button>
+                  )}
                   <input
                     id="profileImageInput"
                     type="file"
@@ -337,24 +379,27 @@ const Dashboard = () => {
                 )}
               </div>
 
-              {/* Password Field */}
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                <div className="flex gap-2">
-                  <input
-                    type="password"
-                    value="••••••••••••"
-                    readOnly
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
-                  />
-                  <button
-                    onClick={() => setShowPasswordModal(true)}
-                    className="px-4 py-2 bg-gradient-to-r from-orange-400 via-red-400 to-yellow-400 text-white rounded-lg hover:from-orange-500 hover:via-red-500 hover:to-yellow-500 transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-105"
-                  >
-                    Change
-                  </button>
+              {/* Password Fields - Only shown when editing */}
+              {isEditingProfile && (
+                <div className="space-y-4 mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <h4 className="text-sm font-semibold text-gray-800 mb-3">Change Password (Optional)</h4>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <input
+                      type="password"
+                      value={passwordData.newPassword}
+                      onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
+                      className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 text-gray-800 placeholder-gray-400"
+                      placeholder="Enter new password (min 8 characters)"
+                    />
+                  </div>
+                  
+                  <p className="text-xs text-gray-600">
+                    Leave password field empty if you don't want to change your password.
+                  </p>
                 </div>
-              </div>
+              )}
 
               {/* Profile Action Buttons */}
               <div className="space-y-3">
@@ -529,79 +574,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Password Change Modal */}
-      {showPasswordModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl w-full max-w-md transform transition-all duration-300 animate-slideUp border border-orange-200 ring-1 ring-orange-100">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold text-gray-800">Change Password</h3>
-                <button
-                  onClick={() => setShowPasswordModal(false)}
-                  className="p-2 hover:bg-orange-100 rounded-lg transition-colors duration-200 text-gray-600 hover:text-gray-800"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
-                  <input
-                    type="password"
-                    value={passwordData.currentPassword}
-                    onChange={(e) => handlePasswordChange('currentPassword', e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 text-gray-800 placeholder-gray-400"
-                    placeholder="Enter current password"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
-                  <input
-                    type="password"
-                    value={passwordData.newPassword}
-                    onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 text-gray-800 placeholder-gray-400"
-                    placeholder="Enter new password (min 8 characters)"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
-                  <input
-                    type="password"
-                    value={passwordData.confirmPassword}
-                    onChange={(e) => handlePasswordChange('confirmPassword', e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 text-gray-800 placeholder-gray-400"
-                    placeholder="Confirm new password"
-                  />
-                </div>
-              </div>
-              
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={() => setShowPasswordModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSavePassword}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-orange-400 via-red-400 to-yellow-400 text-white rounded-lg hover:from-orange-500 hover:via-red-500 hover:to-yellow-500 transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Custom CSS for animations and effects */}
-      <style jsx>{`
+      <style>
+        {`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
@@ -647,7 +622,8 @@ const Dashboard = () => {
         .light-scrollbar::-webkit-scrollbar-thumb:hover {
           background: linear-gradient(to bottom, #ea580c, #b91c1c);
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };

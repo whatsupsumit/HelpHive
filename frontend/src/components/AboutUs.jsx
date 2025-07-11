@@ -1,6 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/userAuth';
 
 const AboutUs = () => {
+  const authUser = useAuthStore((state) => state.authUser);
+  const navigate = useNavigate();
+
   return (
     <div className="relative">
       {/* Hero Section - Above the fold */}
@@ -43,14 +47,14 @@ const AboutUs = () => {
                 <span className="text-orange-200 font-medium">.</span>
               </p>
               
-              <p className="text-lg md:text-xl lg:text-2xl text-gray-900 font-light tracking-wide drop-shadow-xl leading-relaxed">
+              <p className="text-lg md:text-xl lg:text-2xl text-white font-light tracking-wide drop-shadow-xl leading-relaxed">
                 We're building a trusted community platform that connects neighbors and fosters{' '}
                 <span className="text-transparent bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text font-semibold">
                   genuine human connections
                 </span>
               </p>
               
-              <p className="text-base md:text-lg lg:text-xl text-gray-900 font-light tracking-wide drop-shadow-lg leading-relaxed">
+              <p className="text-base md:text-lg lg:text-xl text-white font-light tracking-wide drop-shadow-lg leading-relaxed">
                 Whether you need assistance or want to help others, HelpHive makes community support{' '}
                 <span className="text-transparent bg-gradient-to-r from-yellow-300 via-orange-400 to-red-400 bg-clip-text font-semibold">
                   accessible, dignified, and meaningful
@@ -283,26 +287,29 @@ const AboutUs = () => {
                   </span>. Whether you want to give, receive, or simply belong—HelpHive is your space.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
-                  <Link 
-                    to="/help"
-                    className="group relative bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-xl hover:shadow-yellow-400/25 hover:scale-105 text-base"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
-                    <div className="relative flex items-center space-x-2">
-                      <span className="text-lg">🚀</span>
-                      <span>Get Started Today</span>
-                    </div>
-                  </Link>
-                  <Link 
-                    to="/offer-help"
-                    className="group relative bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-xl border-2 border-white/30 hover:border-white/50 backdrop-blur-md hover:scale-105 text-base"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-full"></div>
-                    <div className="relative flex items-center space-x-2">
-                      <span className="text-lg">💡</span>
-                      <span>Learn More</span>
-                    </div>
-                  </Link>
+                  {authUser ? (
+                    <button
+                      onClick={() => navigate('/dashboard')}
+                      className="group relative bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-xl hover:shadow-yellow-400/25 hover:scale-105 text-base"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
+                      <div className="relative flex items-center space-x-2">
+                        <span className="text-lg">📋</span>
+                        <span>Go to Dashboard</span>
+                      </div>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate('/auth')}
+                      className="group relative bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold px-8 py-4 rounded-full transition-all duration-300 shadow-xl hover:shadow-yellow-400/25 hover:scale-105 text-base"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-full"></div>
+                      <div className="relative flex items-center space-x-2">
+                        <span className="text-lg">🚀</span>
+                        <span>Join Community</span>
+                      </div>
+                    </button>
+                  )}
                 </div>
                 <p className="text-lg md:text-xl font-semibold drop-shadow-lg">
                   <span className="text-transparent bg-gradient-to-r from-yellow-700 via-orange-700 to-red-700 bg-clip-text">
