@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const useHelpStore = create((set) => ({
   isAddingHelp: false,
@@ -11,9 +12,11 @@ const useHelpStore = create((set) => ({
   addhelps: async (data) => {
     set({ isAddingHelp: true });
     try {
-      await axiosInstance.post("/helps/addHelps", data);
+      await axiosInstance.post("/helps/addHelp", data);
+      toast.success("Help request added successfully!");
     } catch (error) {
       console.error("Error adding help:", error);
+      toast.error("Failed to add help request.");
       throw error;
     } finally {
       set({ isAddingHelp: false });
@@ -23,9 +26,11 @@ const useHelpStore = create((set) => ({
   resolveHelps: async (helpId) => {
     set({ isResolvingHelp: true });
     try {
-      await axiosInstance.patch(`/helps/resolveHelps/${helpId}`);
+      await axiosInstance.patch(`/helps/resolveHelp/${helpId}`);
+      toast.success("Help request resolved successfully!");
     } catch (error) {
       console.error("Error resolving help:", error);
+      toast.error("Failed to resolve help request.");
       throw error;
     } finally {
       set({ isResolvingHelp: false });
@@ -35,9 +40,12 @@ const useHelpStore = create((set) => ({
   getLimitedHelps: async () => {
     try {
       const res = await axiosInstance.get("/helps/getLimitedHelps");
-      set({ limitedHelps: res.data.helps });
+      console.log("Limited Helps Response:", res.data);
+      // Backend returns data directly, not wrapped in { helps: [] }
+      set({ limitedHelps: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching limited helps:", error);
+      set({ limitedHelps: [] });
       throw error;
     }
   },
@@ -45,9 +53,10 @@ const useHelpStore = create((set) => ({
   getEmergencyHelps: async () => {
     try {
       const res = await axiosInstance.get("/helps/getEmergencyHelps");
-      set({ emergencyhelps: res.data.helps });
+      set({ emergencyhelps: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching emergency helps:", error);
+      set({ emergencyhelps: [] });
       throw error;
     }
   },
@@ -55,9 +64,10 @@ const useHelpStore = create((set) => ({
   getAllHelps: async () => {
     try {
       const res = await axiosInstance.get("/helps/getAllHelps");
-      set({ allHelps: res.data.helps });
+      set({ allHelps: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching all helps:", error);
+      set({ allHelps: [] });
       throw error;
     }
   },

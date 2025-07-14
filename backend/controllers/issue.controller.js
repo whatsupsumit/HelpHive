@@ -9,10 +9,16 @@ export const addIssue = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const imageurl = null;
+    let imageurl = null;
     if (image) {
-      const uploadResponse = await cloudinary.uploader.upload(image);
-      imageurl = uploadResponse.secure_url;
+      try {
+        const uploadResponse = await cloudinary.uploader.upload(image);
+        imageurl = uploadResponse.secure_url;
+      } catch (cloudinaryError) {
+        console.error("Cloudinary upload error:", cloudinaryError);
+        // Optionally, you can still proceed without the image or return an error
+        console.log("Proceeding without image due to upload error");
+      }
     }
 
     const issue = await Issue.create({
@@ -33,6 +39,7 @@ export const addIssue = async (req, res) => {
 
     return res.status(201).json({
       message: "Issue added successfully",
+      issue: issue,
     });
   } catch (error) {
     console.error("Error adding issue:", error);

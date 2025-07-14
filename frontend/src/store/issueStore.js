@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const useIssueStore = create((set) => ({
   isAddingIssue: false,
@@ -11,10 +12,25 @@ const useIssueStore = create((set) => ({
   addIssue: async (data) => {
     set({ isAddingIssue: true });
     try {
-      await axiosInstance.post("/issues/addissue", data);
+      // Convert file to base64 if image exists
+      let processedData = { ...data };
+      if (data.image && data.image instanceof File) {
+        const base64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(data.image);
+        });
+        processedData.image = base64;
+      }
+
+      await axiosInstance.post("/issues/addissue", processedData);
+      toast.success("Issue reported successfully!");
+      return true;
     } catch (error) {
       console.error("Error adding issue:", error);
-      throw error;
+      toast.error("Failed to report issue. Please try again.");
+      return false;
     } finally {
       set({ isAddingIssue: false });
     }
@@ -67,7 +83,7 @@ const useIssueStore = create((set) => ({
   getAllIssues: async () => {
     try {
       const res = await axiosInstance.get("/issues/getallissues");
-      set({ allIssues: res.data.issues });
+      set({ allIssues: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching all issues:", error);
       throw error;

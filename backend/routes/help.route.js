@@ -3,6 +3,7 @@ import { authToken } from "../middlewares/authToken.js";
 import {
   addHelps,
   getAllHelps,
+  getEmergencyHelps,
   getHelp,
   getLimitedHelps,
   resolveHelps,
@@ -13,7 +14,7 @@ const router = express.Router();
 router.post("/addhelp", authToken, addHelps);
 router.patch("/resolvehelp/:id", authToken, resolveHelps);
 router.get("/getlimitedhelps", authToken, getLimitedHelps);
-router.get("/getemergencyhelps", authToken, getLimitedHelps);
+router.get("/getemergencyhelps", authToken, getEmergencyHelps);
 router.get("/getallhelps", authToken, getAllHelps);
 router.get("/gethelp/:id", authToken, getHelp);
 

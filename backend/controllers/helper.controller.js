@@ -7,6 +7,7 @@ export const addHelps = async (req, res) => {
     if (!title || !description || !location) {
       return res.status(400).json({ message: "All fields are required" });
     }
+
     const help = await Help.create({
       title,
       description,
