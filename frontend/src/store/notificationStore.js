@@ -9,7 +9,7 @@ const useNotificationStore = create((set) => ({
   getAllNotifications: async () => {
     try {
       const res = await axiosInstance.get("/notifications/get-notifications");
-      set({ notifications: res.data.notifications });
+      set({ notifications: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching notifications:", error);
       throw error;
@@ -20,10 +20,8 @@ const useNotificationStore = create((set) => ({
     try {
       await axiosInstance.post(`/notifications/mark-as-read/${notificationId}`);
       set((state) => ({
-        notifications: state.notifications.map((notification) =>
-          notification._id === notificationId
-            ? { ...notification, isRead: true }
-            : notification
+        notifications: state.notifications.filter(
+          (notification) => notification._id !== notificationId
         ),
       }));
     } catch (error) {
@@ -37,12 +35,7 @@ const useNotificationStore = create((set) => ({
     set({ isMarkingAllAsRead: true });
     try {
       await axiosInstance.post("/notifications/mark-all-as-read");
-      set((state) => ({
-        notifications: state.notifications.map((notification) => ({
-          ...notification,
-          isRead: true,
-        })),
-      }));
+      set({ notifications: [] });
     } catch (error) {
       console.error("Error marking all notifications as read:", error);
       throw error;

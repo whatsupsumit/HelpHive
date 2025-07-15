@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import useIssueStore from "../store/issueStore";
+import useAuthStore from "../store/userAuth";
 
 const Report = () => {
-  const { addIssue, isAddingIssue, allIssues, getAllIssues } = useIssueStore();
+  const { addIssue, isAddingIssue, allIssues, getAllIssues, moreIssue } =
+    useIssueStore();
+  const { authUser } = useAuthStore();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -52,6 +55,11 @@ const Report = () => {
       // Refresh the issues list to show the new issue
       await getAllIssues();
     }
+  };
+
+  const handleAddToProfile = async (issueId) => {
+    await moreIssue(issueId);
+    closeDialog();
   };
 
   const handleIssueClick = (issue) => {
@@ -484,12 +492,33 @@ const Report = () => {
 
               {/* Footer */}
               <div className="relative p-4 sm:p-6 border-t border-pink-300/40 flex-shrink-0">
-                <button
-                  onClick={closeDialog}
-                  className="w-full px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white font-semibold rounded-xl transition-all duration-300 hover:scale-105 shadow-lg text-sm sm:text-base"
-                >
-                  Close
-                </button>
+                {authUser ? (
+                  authUser._id !== selectedIssue.userId._id &&
+                  !selectedIssue.users.find(
+                    (user) => user._id === authUser._id
+                  ) ? (
+                    <button
+                      onClick={() => handleAddToProfile(selectedIssue._id)}
+                      className="w-full px-6 py-3 bg-gradient-to-r from-red-400 to-pink-400 hover:from-red-500 hover:to-pink-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2"
+                    >
+                      <span>Add to My Profile</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={closeDialog}
+                      className="w-full px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300"
+                    >
+                      Close
+                    </button>
+                  )
+                ) : (
+                  <button
+                    onClick={closeDialog}
+                    className="w-full px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300"
+                  >
+                    Close
+                  </button>
+                )}
               </div>
             </div>
           </div>

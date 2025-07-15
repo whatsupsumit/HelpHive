@@ -6,6 +6,7 @@ import {
   getEmergencyHelps,
   getHelp,
   getLimitedHelps,
+  getMyHelps,
   resolveHelps,
 } from "../controllers/helper.controller.js";
 
@@ -15,6 +16,7 @@ router.post("/addhelp", authToken, addHelps);
 router.patch("/resolvehelp/:id", authToken, resolveHelps);
 router.get("/getlimitedhelps", authToken, getLimitedHelps);
 router.get("/getemergencyhelps", authToken, getEmergencyHelps);
+router.get("/getmyhelps", authToken, getMyHelps);
 router.get("/getallhelps", authToken, getAllHelps);
 router.get("/gethelp/:id", authToken, getHelp);
 

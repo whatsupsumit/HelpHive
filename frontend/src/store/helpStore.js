@@ -8,6 +8,7 @@ const useHelpStore = create((set) => ({
   limitedHelps: [],
   allHelps: [],
   emergencyhelps: [],
+  myHelps: [],
 
   addhelps: async (data) => {
     set({ isAddingHelp: true });
@@ -78,6 +79,16 @@ const useHelpStore = create((set) => ({
       return res.data.help;
     } catch (error) {
       console.error("Error fetching help:", error);
+      throw error;
+    }
+  },
+
+  getMyHelps: async () => {
+    try {
+      const res = await axiosInstance.get("/helps/getMyHelps");
+      set({ myHelps: Array.isArray(res.data) ? res.data : [] });
+    } catch (error) {
+      console.error("Error fetching my helps:", error);
       throw error;
     }
   },

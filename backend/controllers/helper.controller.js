@@ -104,6 +104,19 @@ export const getLimitedHelps = async (req, res) => {
   }
 };
 
+export const getMyHelps = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const helps = await Help.find({ userId })
+      .populate("userId")
+      .sort({ createdAt: -1 });
+    return res.status(200).json(helps);
+  } catch (error) {
+    console.error("Error fetching my helps:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const getEmergencyHelps = async (req, res) => {
   try {
     const helps = await Help.find({

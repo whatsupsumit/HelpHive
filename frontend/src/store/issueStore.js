@@ -8,6 +8,7 @@ const useIssueStore = create((set) => ({
   limitedIssues: [],
   allIssues: [],
   emergencyIssues: [],
+  myIssues: [],
 
   addIssue: async (data) => {
     set({ isAddingIssue: true });
@@ -40,6 +41,7 @@ const useIssueStore = create((set) => ({
     set({ isAddingIssue: true });
     try {
       await axiosInstance.put(`/issues/addingissue/${issueId}`);
+      toast.success("Issue updated to your profile successfully!");
     } catch (error) {
       console.error("Error adding to issue:", error);
       throw error;
@@ -86,6 +88,18 @@ const useIssueStore = create((set) => ({
       set({ allIssues: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching all issues:", error);
+      throw error;
+    }
+  },
+
+  getMyIssues: async () => {
+    try {
+      const res = await axiosInstance.get("/issues/getmyissues");
+      set({
+        myIssues: Array.isArray(res.data) ? res.data : [],
+      });
+    } catch (error) {
+      console.error("Error fetching my issues:", error);
       throw error;
     }
   },

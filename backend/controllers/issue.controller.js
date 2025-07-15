@@ -154,3 +154,16 @@ export const getlimitedissues = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getMyIssues = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const issues = await User.find({
+      _id: userId,
+    }).populate("ReportedIssues");
+    return res.status(200).json(issues[0].ReportedIssues);
+  } catch (error) {
+    console.error("Error fetching user's issues:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -7,6 +7,7 @@ import {
   getAllIssue,
   getIssue,
   getlimitedissues,
+  getMyIssues,
 } from "../controllers/issue.controller.js";
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.patch("/resolveissue/:id", authToken, resolveIssue);
 router.get("/getlimitedissues", authToken, getlimitedissues);
 router.get("/getallissues", authToken, getAllIssue);
 router.get("/getissue/:id", authToken, getIssue);
+router.get("/getmyissues", authToken, getMyIssues);
 
 export default router;

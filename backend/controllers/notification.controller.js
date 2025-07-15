@@ -13,6 +13,7 @@ export const getAllNotifications = async (req, res) => {
       unread: true,
     })
       .populate("senderId", "name email")
+      .populate("receiverId", "name email")
       .populate("chat")
       .sort({ createdAt: -1 });
 
