@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const useAuthStore = create((set) => ({
   authUser: null,
@@ -12,10 +13,19 @@ const useAuthStore = create((set) => ({
     set({ isRegistering: true });
     try {
       const res = await axiosInstance.post("/users/register", data);
-      set({ authUser: res.data.user });
+      if (res.data.status === 200) {
+        set({ authUser: res.data.user });
+        toast.success("Registration successful!");
+        return res.status; // Return 200 on success
+      } else {
+        toast.error(res.data.message || "Registration failed");
+        return null; // Return null on failure
+      }
     } catch (error) {
       console.error("Registration failed:", error);
+      toast.error("Registration failed. Please try again.");
       set({ authUser: null });
+      return null; // Return null on error
     } finally {
       set({ isRegistering: false });
     }
@@ -25,10 +35,18 @@ const useAuthStore = create((set) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/users/login", data);
-      set({ authUser: res.data.user });
+      if (res.status !== 200) {
+        toast(res.data.message || "Login failed");
+        return null; // Return null on failure
+      } else {
+        set({ authUser: res.data.user });
+        return res.status; // Return 200 on success
+      }
     } catch (error) {
       console.error("Login failed:", error);
+      toast.error("Login failed. Please check your credentials.");
       set({ authUser: null });
+      return null; // Return null on error
     } finally {
       set({ isLoggingIn: false });
     }

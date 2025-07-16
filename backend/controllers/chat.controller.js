@@ -47,7 +47,9 @@ export const sendMessage = async (req, res) => {
       return res.status(500).json({ message: "Failed to create notification" });
     }
 
-    return res.status(201).json({ message: "Message sent successfully" });
+    return res
+      .status(201)
+      .json({ message: "Message sent successfully", newMessage });
   } catch (error) {
     console.error("Error sending message:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -81,7 +83,7 @@ export const getMessages = async (req, res) => {
   }
 };
 
-export const getUsers = async (req, res) => {
+export const getSideBarUsers = async (req, res) => {
   try {
     const userId = req.user.id;
 
@@ -89,11 +91,11 @@ export const getUsers = async (req, res) => {
       _id: {
         $ne: userId,
       },
-    });
+    }).select("-password");
 
     return res.status(200).json(users);
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching sidebar users:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

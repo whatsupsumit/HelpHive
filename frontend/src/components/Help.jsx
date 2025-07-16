@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import HelpRequestForm from './HelpRequestForm';
+import { useState } from "react";
+import HelpRequestForm from "./HelpRequestForm";
 
 const Help = () => {
   const [isHelpFormOpen, setIsHelpFormOpen] = useState(false);
@@ -20,22 +20,27 @@ const Help = () => {
             Ask for Help
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
-            Connect with your community for assistance. Whether it's a small favor or urgent help, your neighbors are here to support you.
+            Connect with your community for assistance. Whether it's a small
+            favor or urgent help, your neighbors are here to support you.
           </p>
         </div>
 
         <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-xl p-8 mb-8 border border-blue-200/50">
           <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
             <div className="flex-1">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">Need Help with Something?</h2>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                Need Help with Something?
+              </h2>
               <p className="text-gray-600 mb-6">
-                Create a help request and let your community know how they can assist you. From everyday tasks to emergency situations, we're here to help.
+                Create a help request and let your community know how they can
+                assist you. From everyday tasks to emergency situations, we're
+                here to help.
               </p>
             </div>
             <div className="flex-shrink-0">
-              <button 
+              <button
                 onClick={handleOpenForm}
-                className="bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
               >
                 Create Help Request
               </button>
@@ -50,49 +55,60 @@ const Help = () => {
               icon: "🚚",
               title: "Moving & Transportation",
               description: "Help with moving, rides, or transportation needs",
-              examples: ["Moving furniture", "Airport rides", "Car trouble"]
+              examples: ["Moving furniture", "Airport rides", "Car trouble"],
             },
             {
               icon: "🛠️",
               title: "Home & Repairs",
               description: "Assistance with home projects and repairs",
-              examples: ["Fixing things", "Yard work", "Home improvement"]
+              examples: ["Fixing things", "Yard work", "Home improvement"],
             },
             {
               icon: "🛒",
               title: "Shopping & Errands",
               description: "Help with shopping and running errands",
-              examples: ["Grocery shopping", "Picking up items", "Deliveries"]
+              examples: ["Grocery shopping", "Picking up items", "Deliveries"],
             },
             {
               icon: "👶",
               title: "Childcare & Pets",
               description: "Assistance with children and pet care",
-              examples: ["Babysitting", "Pet walking", "School pickup"]
+              examples: ["Babysitting", "Pet walking", "School pickup"],
             },
             {
               icon: "🏥",
               title: "Health & Emergency",
               description: "Support during health issues or emergencies",
-              examples: ["Medical appointments", "Emergency assistance", "Recovery help"]
+              examples: [
+                "Medical appointments",
+                "Emergency assistance",
+                "Recovery help",
+              ],
             },
             {
               icon: "💼",
               title: "Professional & Skills",
               description: "Help with work, technology, or learning",
-              examples: ["Tech support", "Resume help", "Tutoring"]
-            }
+              examples: ["Tech support", "Resume help", "Tutoring"],
+            },
           ].map((category, index) => (
             <div
               key={index}
               className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-blue-200/30 hover:shadow-xl transition-all duration-300"
             >
               <div className="text-3xl mb-4">{category.icon}</div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{category.title}</h3>
-              <p className="text-gray-600 text-sm mb-3">{category.description}</p>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {category.title}
+              </h3>
+              <p className="text-gray-600 text-sm mb-3">
+                {category.description}
+              </p>
               <div className="space-y-1">
                 {category.examples.map((example, idx) => (
-                  <span key={idx} className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mr-1 mb-1">
+                  <span
+                    key={idx}
+                    className="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mr-1 mb-1"
+                  >
                     {example}
                   </span>
                 ))}
@@ -103,27 +119,45 @@ const Help = () => {
 
         <div className="text-center">
           <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl p-8 border border-yellow-200/50">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">🤝 How to Get Help</h3>
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+              🤝 How to Get Help
+            </h3>
             <div className="grid md:grid-cols-4 gap-6 text-center">
               <div>
                 <div className="text-3xl mb-2">📝</div>
-                <h4 className="font-semibold text-gray-800 mb-2">1. Create Request</h4>
-                <p className="text-sm text-gray-600">Describe what help you need and when</p>
+                <h4 className="font-semibold text-gray-800 mb-2">
+                  1. Create Request
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Describe what help you need and when
+                </p>
               </div>
               <div>
                 <div className="text-3xl mb-2">👥</div>
-                <h4 className="font-semibold text-gray-800 mb-2">2. Community Sees</h4>
-                <p className="text-sm text-gray-600">Your neighbors and community members view your request</p>
+                <h4 className="font-semibold text-gray-800 mb-2">
+                  2. Community Sees
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Your neighbors and community members view your request
+                </p>
               </div>
               <div>
                 <div className="text-3xl mb-2">🤝</div>
-                <h4 className="font-semibold text-gray-800 mb-2">3. Get Responses</h4>
-                <p className="text-sm text-gray-600">People reach out to offer their assistance</p>
+                <h4 className="font-semibold text-gray-800 mb-2">
+                  3. Get Responses
+                </h4>
+                <p className="text-sm text-gray-600">
+                  People reach out to offer their assistance
+                </p>
               </div>
               <div>
                 <div className="text-3xl mb-2">✅</div>
-                <h4 className="font-semibold text-gray-800 mb-2">4. Connect & Help</h4>
-                <p className="text-sm text-gray-600">Coordinate details and receive the help you need</p>
+                <h4 className="font-semibold text-gray-800 mb-2">
+                  4. Connect & Help
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Coordinate details and receive the help you need
+                </p>
               </div>
             </div>
           </div>
@@ -131,10 +165,7 @@ const Help = () => {
       </div>
 
       {/* Help Request Form Modal */}
-      <HelpRequestForm 
-        isOpen={isHelpFormOpen} 
-        onClose={handleCloseForm}
-      />
+      <HelpRequestForm isOpen={isHelpFormOpen} onClose={handleCloseForm} />
     </div>
   );
 };

@@ -65,7 +65,7 @@ const useIssueStore = create((set) => ({
   getLimitedIssues: async () => {
     try {
       const res = await axiosInstance.get("/issues/getlimitedissues");
-      set({ limitedIssues: res.data.issues });
+      set({ limitedIssues: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching limited issues:", error);
       throw error;

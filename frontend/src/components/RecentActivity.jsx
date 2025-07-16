@@ -1,4 +1,24 @@
+import { useEffect } from "react";
+import useHelpStore from "../store/helpStore";
+import useIssueStore from "../store/issueStore";
+import { Link } from "react-router-dom";
+
 const RecentActivity = () => {
+  const { limitedHelps, getLimitedHelps } = useHelpStore();
+  const { limitedIssues, getLimitedIssues } = useIssueStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await getLimitedHelps();
+        await getLimitedIssues();
+      } catch (error) {
+        console.error("Error fetching recent activity:", error);
+      }
+    };
+    fetchData();
+  }, [getLimitedHelps, getLimitedIssues]);
+
   return (
     <section className="py-16 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="max-w-6xl mx-auto">
@@ -28,155 +48,66 @@ const RecentActivity = () => {
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
               {/* Request Items */}
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
-                      Help with grocery shopping
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Need someone to help pick up groceries for elderly
-                      neighbor. Light items only.
-                    </p>
-                    <span className="text-xs text-gray-500">2 hours ago</span>
+              {limitedHelps && limitedHelps.length > 0 ? (
+                limitedHelps.map((help) => (
+                  <div
+                    key={help._id}
+                    className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
+                          {help.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+                          {help.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <span>
+                            {new Date(help.createdAt).toLocaleDateString()}
+                          </span>
+                          {help.location && (
+                            <>
+                              <span>•</span>
+                              <span>📍 {help.location}</span>
+                            </>
+                          )}
+                          {help.isEmergency && (
+                            <>
+                              <span>•</span>
+                              <span className="text-red-600 font-medium">
+                                🚨 Emergency
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <Link
+                        to={"/offer-help"}
+                        className="text-blue-500 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-all"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
                   </div>
-                  <button className="text-blue-500 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500">No recent requests available</p>
                 </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
-                      Moving assistance needed
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Looking for 2-3 people to help move furniture this
-                      weekend. Pizza provided!
-                    </p>
-                    <span className="text-xs text-gray-500">4 hours ago</span>
-                  </div>
-                  <button className="text-blue-500 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
-                      Dog walking service
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Need someone to walk my golden retriever while I'm
-                      recovering from surgery.
-                    </p>
-                    <span className="text-xs text-gray-500">6 hours ago</span>
-                  </div>
-                  <button className="text-blue-500 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
-                      Tutoring for math
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      High school student needs help with calculus homework.
-                      Online sessions preferred.
-                    </p>
-                    <span className="text-xs text-gray-500">8 hours ago</span>
-                  </div>
-                  <button className="text-blue-500 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-blue-600 transition-colors">
-                      Garden maintenance
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Looking for someone to help with weeding and basic garden
-                      upkeep.
-                    </p>
-                    <span className="text-xs text-gray-500">1 day ago</span>
-                  </div>
-                  <button className="text-blue-500 hover:text-blue-700 p-1 rounded-lg hover:bg-blue-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
 
@@ -194,155 +125,86 @@ const RecentActivity = () => {
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
               {/* Issue Items */}
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-red-600 transition-colors">
-                      Suspicious activity reported
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Community member reported unusual activity in the park
-                      area after hours.
-                    </p>
-                    <span className="text-xs text-gray-500">1 hour ago</span>
+              {limitedIssues && limitedIssues.length > 0 ? (
+                limitedIssues.map((issue) => (
+                  <div
+                    key={issue._id}
+                    className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-red-600 transition-colors">
+                          {issue.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+                          {issue.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <span>
+                            {new Date(issue.createdAt).toLocaleDateString()}
+                          </span>
+                          {issue.location && (
+                            <>
+                              <span>•</span>
+                              <span>📍 {issue.location}</span>
+                            </>
+                          )}
+                          {issue.severity && (
+                            <>
+                              <span>•</span>
+                              <span
+                                className={`font-medium ${
+                                  issue.severity === "critical"
+                                    ? "text-red-600"
+                                    : issue.severity === "high"
+                                    ? "text-orange-600"
+                                    : issue.severity === "medium"
+                                    ? "text-yellow-600"
+                                    : "text-green-600"
+                                }`}
+                              >
+                                🔧{" "}
+                                {issue.severity.charAt(0).toUpperCase() +
+                                  issue.severity.slice(1)}
+                              </span>
+                            </>
+                          )}
+                          {issue.isResolved && (
+                            <>
+                              <span>•</span>
+                              <span className="text-green-600 font-medium">
+                                ✅ Resolved
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <Link
+                        to="/report"
+                        className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-all"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </Link>
+                    </div>
                   </div>
-                  <button className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500">No recent issues reported</p>
                 </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-red-600 transition-colors">
-                      Inappropriate content flag
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      User reported inappropriate language in community chat.
-                      Under review.
-                    </p>
-                    <span className="text-xs text-gray-500">3 hours ago</span>
-                  </div>
-                  <button className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-red-600 transition-colors">
-                      Safety concern raised
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Report about broken streetlight creating unsafe walking
-                      conditions.
-                    </p>
-                    <span className="text-xs text-gray-500">5 hours ago</span>
-                  </div>
-                  <button className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-red-600 transition-colors">
-                      Spam account detected
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      Multiple reports of spam messages from new user account.
-                      Being investigated.
-                    </p>
-                    <span className="text-xs text-gray-500">7 hours ago</span>
-                  </div>
-                  <button className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white/80 rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all duration-300 group">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 mb-1 group-hover:text-red-600 transition-colors">
-                      Platform misuse report
-                    </h4>
-                    <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-                      User reported platform being used for commercial purposes
-                      against ToS.
-                    </p>
-                    <span className="text-xs text-gray-500">1 day ago</span>
-                  </div>
-                  <button className="text-red-500 hover:text-red-700 p-1 rounded-lg hover:bg-red-50 transition-all">
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

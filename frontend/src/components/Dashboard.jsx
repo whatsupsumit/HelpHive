@@ -327,7 +327,7 @@ const Dashboard = () => {
                       onClick={() =>
                         document.getElementById("profileImageInput").click()
                       }
-                      className="absolute -bottom-2 -right-2 w-10 h-10 bg-white border-2 border-orange-300 rounded-full flex items-center justify-center hover:bg-orange-50 transition-all duration-200 shadow-md hover:scale-110 group-hover:border-orange-400"
+                      className="absolute -bottom-2 -right-2 w-10 h-10 bg-white border-2 border-orange-300 rounded-full flex items-center justify-center hover:bg-orange-50 transition-all duration-200 shadow-md hover:scale-110 group-hover:border-orange-400 cursor-pointer"
                       title="Change profile picture"
                     >
                       <svg
@@ -442,13 +442,13 @@ const Dashboard = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={handleSaveProfile}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white py-2 px-4 rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-105"
+                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white py-2 px-4 rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-105 cursor-pointer"
                     >
                       Save Changes
                     </button>
                     <button
                       onClick={() => setIsEditingProfile(false)}
-                      className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-all duration-200 font-medium"
+                      className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-all duration-200 font-medium cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -456,7 +456,7 @@ const Dashboard = () => {
                 ) : (
                   <button
                     onClick={() => setIsEditingProfile(true)}
-                    className="w-full bg-gradient-to-r from-orange-400 via-red-400 to-yellow-400 text-white py-2 px-4 rounded-lg hover:from-orange-500 hover:via-red-500 hover:to-yellow-500 transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-105"
+                    className="w-full bg-gradient-to-r from-orange-400 via-red-400 to-yellow-400 text-white py-2 px-4 rounded-lg hover:from-orange-500 hover:via-red-500 hover:to-yellow-500 transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-105 cursor-pointer"
                   >
                     Edit Profile
                   </button>
@@ -546,7 +546,7 @@ const Dashboard = () => {
                           className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                             isMarkingAllAsRead
                               ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                              : "bg-gradient-to-r from-orange-400 to-red-400 text-white hover:from-orange-500 hover:to-red-500 shadow-md hover:shadow-lg"
+                              : "bg-gradient-to-r from-orange-400 to-red-400 text-white hover:from-orange-500 hover:to-red-500 shadow-md hover:shadow-lg cursor-pointer"
                           }`}
                         >
                           {isMarkingAllAsRead
@@ -618,7 +618,7 @@ const Dashboard = () => {
                                     className={`ml-2 px-3 py-1 text-xs font-medium rounded-full transition-colors duration-200 ${
                                       isMarkingAsRead
                                         ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                                        : "bg-gradient-to-r from-orange-400 to-red-400 text-white hover:from-orange-500 hover:to-red-500"
+                                        : "bg-gradient-to-r from-orange-400 to-red-400 text-white hover:from-orange-500 hover:to-red-500 shadow-md hover:shadow-lg cursor-pointer"
                                     }`}
                                   >
                                     {isMarkingAsRead

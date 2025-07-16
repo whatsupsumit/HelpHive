@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import useAuthStore from '../store/userAuth';
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useAuthStore from "../store/userAuth";
 
 const AuthPage = () => {
-  const { registerUser, loginUser, authUser} = useAuthStore();
+  const { registerUser, loginUser, authUser } = useAuthStore();
   const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
+    name: "",
+    email: "",
+    password: "",
   });
 
   // Handle navigation when user is authenticated
   useEffect(() => {
     if (authUser) {
-      navigate('/');
+      navigate("/");
     }
   }, [authUser, navigate]);
 
@@ -26,22 +26,29 @@ const AuthPage = () => {
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
-      await loginUser({ email: formData.email, password: formData.password });
-      navigate('/');
+      const result = await loginUser({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (result === 200) {
+        navigate("/");
+      }
     } else {
-      await registerUser({
+      const status = await registerUser({
         name: formData.name,
         email: formData.email,
         password: formData.password,
       });
-      navigate('/');
+      if (status === 200) {
+        navigate("/");
+      }
     }
   };
 
@@ -49,9 +56,9 @@ const AuthPage = () => {
     setIsLogin(!isLogin);
     // Clear form when switching modes
     setFormData({
-      name: '',
-      email: '',
-      password: ''
+      name: "",
+      email: "",
+      password: "",
     });
   };
 
@@ -59,9 +66,9 @@ const AuthPage = () => {
     <div className="min-h-screen relative flex items-center justify-center px-4 py-4 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
-        <img 
-          src="/helphome.png" 
-          alt="HelpHive Background" 
+        <img
+          src="/helphome.png"
+          alt="HelpHive Background"
           className="w-full h-full object-cover"
         />
         {/* Dark overlay for readability */}
@@ -80,21 +87,21 @@ const AuthPage = () => {
 
       <div className="relative w-full max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center min-h-[80vh]">
-          
           {/* Left Side - Branding & Info */}
           <div className="text-center lg:text-left space-y-6 order-2 lg:order-1 px-4">
             {/* Logo Section */}
             <div className="flex items-center justify-center lg:justify-start space-x-3">
               <div className="relative">
-                <img 
-                  src="/hivelogo.png" 
-                  alt="HelpHive Logo" 
+                <img
+                  src="/hivelogo.png"
+                  alt="HelpHive Logo"
                   className="w-16 h-16 lg:w-20 lg:h-20 drop-shadow-2xl"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-orange-400/20 rounded-full blur-xl"></div>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold text-white drop-shadow-2xl">
-                Help<span className="text-transparent bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text">
+                Help
+                <span className="text-transparent bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 bg-clip-text">
                   Hive
                 </span>
               </h1>
@@ -120,10 +127,9 @@ const AuthPage = () => {
                 )}
               </h2>
               <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed max-w-lg">
-                {isLogin 
-                  ? 'Sign in to continue helping others and getting the support you need in our amazing community.'
-                  : 'Connect with neighbors, share resources, and build a stronger community together. Your journey starts here.'
-                }
+                {isLogin
+                  ? "Sign in to continue helping others and getting the support you need in our amazing community."
+                  : "Connect with neighbors, share resources, and build a stronger community together. Your journey starts here."}
               </p>
             </div>
 
@@ -131,25 +137,41 @@ const AuthPage = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-300">
                 <div className="w-2 h-2 bg-gradient-to-r from-red-400 to-orange-400 rounded-full"></div>
-                <span className="text-lg lg:text-xl">Connect with local community members</span>
+                <span className="text-lg lg:text-xl">
+                  Connect with local community members
+                </span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <div className="w-2 h-2 bg-gradient-to-r from-orange-400 to-yellow-400 rounded-full"></div>
-                <span className="text-lg lg:text-xl">Offer and receive help when you need it</span>
+                <span className="text-lg lg:text-xl">
+                  Offer and receive help when you need it
+                </span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-red-400 rounded-full"></div>
-                <span className="text-lg lg:text-xl">Build lasting relationships and trust</span>
+                <span className="text-lg lg:text-xl">
+                  Build lasting relationships and trust
+                </span>
               </div>
             </div>
 
             {/* Back to Home */}
-            <Link 
+            <Link
               to="/"
               className="inline-flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300 group text-lg"
             >
-              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              <svg
+                className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                />
               </svg>
               <span>Back to Home</span>
             </Link>
@@ -158,21 +180,22 @@ const AuthPage = () => {
           {/* Right Side - Auth Form */}
           <div className="order-1 lg:order-2 px-4">
             <div className="relative bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 p-6 lg:p-8 max-w-md mx-auto overflow-hidden">
-              
               {/* Form background pattern */}
               <div className="absolute inset-0 opacity-30">
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-red-500/20 via-orange-500/10 to-yellow-500/20 rounded-2xl"></div>
                 <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-pink-400/20 to-purple-400/20 rounded-full blur-2xl"></div>
                 <div className="absolute bottom-4 left-4 w-24 h-24 bg-gradient-to-tr from-blue-400/20 to-cyan-400/20 rounded-full blur-xl"></div>
               </div>
-              
+
               {/* Form Header */}
               <div className="relative z-10 text-center mb-6">
                 <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 drop-shadow-lg">
-                  {isLogin ? 'Sign In' : 'Create Account'}
+                  {isLogin ? "Sign In" : "Create Account"}
                 </h3>
                 <p className="text-gray-200 text-sm drop-shadow-md">
-                  {isLogin ? 'Welcome back! Please sign in to continue.' : 'Fill in your information to get started.'}
+                  {isLogin
+                    ? "Welcome back! Please sign in to continue."
+                    : "Fill in your information to get started."}
                 </p>
               </div>
 
@@ -180,20 +203,20 @@ const AuthPage = () => {
               <div className="relative z-10 flex bg-black/30 backdrop-blur-sm rounded-lg p-1 mb-6 border border-white/10">
                 <button
                   onClick={() => setIsLogin(true)}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 ${
+                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 cursor-pointer ${
                     isLogin
-                      ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/25'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                      ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/25"
+                      : "text-gray-300 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   Sign In
                 </button>
                 <button
                   onClick={() => setIsLogin(false)}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 ${
+                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 cursor-pointer ${
                     !isLogin
-                      ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/25'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
+                      ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/25"
+                      : "text-gray-300 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   Sign Up
@@ -202,16 +225,18 @@ const AuthPage = () => {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="relative z-10 space-y-4">
-                
                 {/* Name Field - Only for Signup */}
-                <div 
+                <div
                   className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                    isLogin ? 'max-h-0 opacity-0' : 'max-h-20 opacity-100'
+                    isLogin ? "max-h-0 opacity-0" : "max-h-20 opacity-100"
                   }`}
                 >
                   {!isLogin && (
                     <div className="space-y-1">
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-200 drop-shadow-md">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-200 drop-shadow-md"
+                      >
                         Full Name
                       </label>
                       <div className="relative">
@@ -233,7 +258,10 @@ const AuthPage = () => {
 
                 {/* Email Field */}
                 <div className="space-y-1">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-200 drop-shadow-md">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-200 drop-shadow-md"
+                  >
                     Email Address
                   </label>
                   <div className="relative">
@@ -253,7 +281,10 @@ const AuthPage = () => {
 
                 {/* Password Field */}
                 <div className="space-y-1">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-200 drop-shadow-md">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-200 drop-shadow-md"
+                  >
                     Password
                   </label>
                   <div className="relative">
@@ -274,10 +305,12 @@ const AuthPage = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full mt-6 relative overflow-hidden bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 hover:from-red-600 hover:via-orange-600 hover:to-yellow-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400/50 shadow-2xl hover:shadow-orange-500/25 group"
+                  className="w-full mt-6 relative overflow-hidden bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 hover:from-red-600 hover:via-orange-600 hover:to-yellow-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400/50 shadow-2xl hover:shadow-orange-500/25 group cursor-pointer"
                 >
                   <span className="relative z-10">
-                    {isLogin ? 'Sign In to HelpHive' : 'Join HelpHive Community'}
+                    {isLogin
+                      ? "Sign In to HelpHive"
+                      : "Join HelpHive Community"}
                   </span>
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-400/30 to-purple-400/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                   <div className="absolute inset-0 bg-white/10 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-bottom"></div>
@@ -286,14 +319,16 @@ const AuthPage = () => {
                 {/* Alternative Action */}
                 <div className="text-center pt-3">
                   <span className="text-gray-200 text-sm drop-shadow-md">
-                    {isLogin ? "Don't have an account? " : "Already have an account? "}
+                    {isLogin
+                      ? "Don't have an account? "
+                      : "Already have an account? "}
                   </span>
                   <button
                     type="button"
                     onClick={toggleMode}
-                    className="text-transparent bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-400 bg-clip-text hover:from-orange-300 hover:via-yellow-300 hover:to-pink-300 font-medium transition-all duration-200 hover:scale-105 drop-shadow-lg text-sm"
+                    className="text-transparent bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-400 bg-clip-text hover:from-orange-300 hover:via-yellow-300 hover:to-pink-300 font-medium transition-all duration-200 hover:scale-105 drop-shadow-lg text-sm cursor-pointer"
                   >
-                    {isLogin ? 'Create an account' : 'Sign in instead'}
+                    {isLogin ? "Create an account" : "Sign in instead"}
                   </button>
                 </div>
               </form>

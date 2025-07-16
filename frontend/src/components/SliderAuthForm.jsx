@@ -1,28 +1,31 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const SliderAuthForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isLogin) {
-      console.log('Login submitted:', { email: formData.email, password: formData.password });
+      console.log("Login submitted:", {
+        email: formData.email,
+        password: formData.password,
+      });
     } else {
-      console.log('Signup submitted:', formData);
+      console.log("Signup submitted:", formData);
     }
     // Add your authentication logic here
   };
@@ -31,20 +34,20 @@ const SliderAuthForm = () => {
     setIsLogin(!isLogin);
     // Clear form when switching modes
     setFormData({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     });
   };
 
   const closeModal = () => {
     setIsOpen(false);
     setFormData({
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     });
   };
 
@@ -61,14 +64,16 @@ const SliderAuthForm = () => {
 
       {/* Modal Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm"
           onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
           {/* Modal Content */}
-          <div 
+          <div
             className={`relative w-full max-w-md mx-4 bg-gradient-to-br from-gray-900/95 via-red-900/90 to-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-red-400/30 transform transition-all duration-500 ease-out ${
-              isOpen ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'
+              isOpen
+                ? "scale-100 opacity-100 translate-y-0"
+                : "scale-95 opacity-0 translate-y-4"
             }`}
           >
             {/* Close Button */}
@@ -77,18 +82,30 @@ const SliderAuthForm = () => {
               className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200 z-10"
               aria-label="Close form"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
 
             {/* Header */}
             <div className="text-center pt-8 pb-6 px-8">
               <h2 className="text-3xl font-bold text-white mb-2">
-                {isLogin ? 'Welcome Back' : 'Join HelpHive'}
+                {isLogin ? "Welcome Back" : "Join HelpHive"}
               </h2>
               <p className="text-gray-300">
-                {isLogin ? 'Sign in to your account' : 'Create your account to get started'}
+                {isLogin
+                  ? "Sign in to your account"
+                  : "Create your account to get started"}
               </p>
             </div>
 
@@ -98,8 +115,8 @@ const SliderAuthForm = () => {
                 onClick={() => setIsLogin(true)}
                 className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 ${
                   isLogin
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white'
+                    ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg"
+                    : "text-gray-400 hover:text-white"
                 }`}
               >
                 Login
@@ -108,8 +125,8 @@ const SliderAuthForm = () => {
                 onClick={() => setIsLogin(false)}
                 className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-300 ${
                   !isLogin
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
-                    : 'text-gray-400 hover:text-white'
+                    ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg"
+                    : "text-gray-400 hover:text-white"
                 }`}
               >
                 Signup
@@ -120,14 +137,19 @@ const SliderAuthForm = () => {
             <form onSubmit={handleSubmit} className="px-8 pb-8">
               <div className="space-y-4">
                 {/* Name Field - Only for Signup */}
-                <div 
+                <div
                   className={`transition-all duration-500 ease-in-out ${
-                    isLogin ? 'max-h-0 opacity-0 overflow-hidden' : 'max-h-20 opacity-100'
+                    isLogin
+                      ? "max-h-0 opacity-0 overflow-hidden"
+                      : "max-h-20 opacity-100"
                   }`}
                 >
                   {!isLogin && (
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-300 mb-2"
+                      >
                         Full Name
                       </label>
                       <input
@@ -146,7 +168,10 @@ const SliderAuthForm = () => {
 
                 {/* Email Field */}
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     Email Address
                   </label>
                   <input
@@ -163,7 +188,10 @@ const SliderAuthForm = () => {
 
                 {/* Password Field */}
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     Password
                   </label>
                   <input
@@ -179,14 +207,19 @@ const SliderAuthForm = () => {
                 </div>
 
                 {/* Confirm Password Field - Only for Signup */}
-                <div 
+                <div
                   className={`transition-all duration-500 ease-in-out ${
-                    isLogin ? 'max-h-0 opacity-0 overflow-hidden' : 'max-h-20 opacity-100'
+                    isLogin
+                      ? "max-h-0 opacity-0 overflow-hidden"
+                      : "max-h-20 opacity-100"
                   }`}
                 >
                   {!isLogin && (
                     <div>
-                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+                      <label
+                        htmlFor="confirmPassword"
+                        className="block text-sm font-medium text-gray-300 mb-2"
+                      >
                         Confirm Password
                       </label>
                       <input
@@ -209,20 +242,22 @@ const SliderAuthForm = () => {
                 type="submit"
                 className="w-full mt-6 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500/50 shadow-lg hover:shadow-xl"
               >
-                {isLogin ? 'Sign In' : 'Create Account'}
+                {isLogin ? "Sign In" : "Create Account"}
               </button>
 
               {/* Alternative Action */}
               <div className="text-center mt-4">
                 <span className="text-gray-400 text-sm">
-                  {isLogin ? "Don't have an account? " : "Already have an account? "}
+                  {isLogin
+                    ? "Don't have an account? "
+                    : "Already have an account? "}
                 </span>
                 <button
                   type="button"
                   onClick={toggleMode}
                   className="text-red-400 hover:text-red-300 text-sm font-medium transition-colors duration-200"
                 >
-                  {isLogin ? 'Sign up here' : 'Sign in here'}
+                  {isLogin ? "Sign up here" : "Sign in here"}
                 </button>
               </div>
             </form>

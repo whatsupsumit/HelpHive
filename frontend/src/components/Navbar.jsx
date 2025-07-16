@@ -123,7 +123,7 @@ const Navbar = () => {
                 }`}
               ></div>
             </Link>
-            
+
             {/* <Link
               to="/chat"
               className={`relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 ${
@@ -142,7 +142,6 @@ const Navbar = () => {
               ></div>
             </Link> */}
 
-
             <Link
               to="/about"
               className={`relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 ${
@@ -160,8 +159,6 @@ const Navbar = () => {
                 }`}
               ></div>
             </Link>
-
-
 
             {/* Auth Links with Enhanced Styling */}
             <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-red-400/40">
@@ -342,7 +339,7 @@ const Navbar = () => {
 
                         <button
                           onClick={handleLogout}
-                          className="flex items-center w-full px-4 py-3 text-sm text-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-red-500/20 hover:to-pink-500/10 transition-all duration-300 group relative overflow-hidden"
+                          className="flex items-center w-full px-4 py-3 text-sm text-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-red-500/20 hover:to-pink-500/10 transition-all duration-300 group relative overflow-hidden cursor-pointer"
                         >
                           <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 to-pink-500/0 group-hover:from-red-500/10 group-hover:to-pink-500/5 transition-all duration-300"></div>
                           <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-red-500 to-pink-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>

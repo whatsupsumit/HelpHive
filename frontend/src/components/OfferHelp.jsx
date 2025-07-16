@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import useHelpStore from "../store/helpStore";
+import useAuthStore from "../store/userAuth";
+import { Link } from "react-router-dom";
 
 const OfferHelp = () => {
   const { getEmergencyHelps, getAllHelps, emergencyhelps, allHelps } =
     useHelpStore();
+  const { authUser } = useAuthStore();
 
   useEffect(() => {
     const fetchHelps = async () => {
@@ -17,6 +20,10 @@ const OfferHelp = () => {
 
     fetchHelps();
   }, [getEmergencyHelps, getAllHelps]);
+
+  console.log("Auth User:", authUser);
+  console.log("Emergency Helps:", emergencyhelps);
+  console.log("All Helps:", allHelps);
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
@@ -87,9 +94,14 @@ const OfferHelp = () => {
                   <div className="text-sm text-gray-500">
                     <span>📍 {help.location}</span>
                   </div>
-                  <button className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300">
-                    Offer Help
-                  </button>
+                  {authUser?._id !== help.userId?._id && (
+                    <Link
+                      to="/chat"
+                      className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
+                    >
+                      Offer Help
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
@@ -133,9 +145,14 @@ const OfferHelp = () => {
                   <div className="text-sm text-gray-500">
                     <span>📍 {help.location}</span>
                   </div>
-                  <button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300">
-                    Offer Help
-                  </button>
+                  {authUser?._id !== help.userId?._id && (
+                    <Link
+                      to="/chat"
+                      className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
+                    >
+                      Offer Help
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}

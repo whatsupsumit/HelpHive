@@ -304,7 +304,7 @@ const Report = () => {
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
                 <button
                   type="button"
-                  className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300"
+                  className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300 cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -407,7 +407,7 @@ const Report = () => {
                   </div>
                   <button
                     onClick={closeDialog}
-                    className="text-gray-600 hover:text-red-700 text-xl sm:text-2xl hover:rotate-90 transition-all duration-300 p-1"
+                    className="text-gray-600 hover:text-red-700 text-xl sm:text-2xl hover:rotate-90 transition-all duration-300 p-1 cursor-pointer"
                   >
                     ✕
                   </button>
@@ -499,14 +499,14 @@ const Report = () => {
                   ) ? (
                     <button
                       onClick={() => handleAddToProfile(selectedIssue._id)}
-                      className="w-full px-6 py-3 bg-gradient-to-r from-red-400 to-pink-400 hover:from-red-500 hover:to-pink-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2"
+                      className="w-full px-6 py-3 bg-gradient-to-r from-red-400 to-pink-400 hover:from-red-500 hover:to-pink-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 cursor-pointer"
                     >
                       <span>Add to My Profile</span>
                     </button>
                   ) : (
                     <button
                       onClick={closeDialog}
-                      className="w-full px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300"
+                      className="w-full px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300 cursor-pointer"
                     >
                       Close
                     </button>
@@ -514,7 +514,7 @@ const Report = () => {
                 ) : (
                   <button
                     onClick={closeDialog}
-                    className="w-full px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300"
+                    className="w-full px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-all duration-300 cursor-pointer"
                   >
                     Close
                   </button>

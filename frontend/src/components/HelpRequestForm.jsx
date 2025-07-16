@@ -56,7 +56,7 @@ const HelpRequestForm = ({ isOpen, onClose }) => {
               </div>
               <button
                 onClick={onClose}
-                className="text-gray-600 hover:text-orange-700 transition-colors duration-300 text-2xl hover:rotate-90 transition-transform"
+                className="text-gray-600 hover:text-orange-700 transition-colors duration-300 text-2xl hover:rotate-90 transition-transform cursor-pointer"
               >
                 ✕
               </button>
@@ -147,7 +147,7 @@ const HelpRequestForm = ({ isOpen, onClose }) => {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-gray-200/80 via-gray-100/70 to-gray-200/80 hover:from-gray-300/80 hover:via-gray-200/70 hover:to-gray-300/80 text-gray-700 font-semibold rounded-xl transition-all duration-300 border border-gray-400/50 shadow-lg backdrop-blur-sm hover:scale-[1.02]"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-gray-200/80 via-gray-100/70 to-gray-200/80 hover:from-gray-300/80 hover:via-gray-200/70 hover:to-gray-300/80 text-gray-700 font-semibold rounded-xl transition-all duration-300 border border-gray-400/50 shadow-lg backdrop-blur-sm hover:scale-[1.02] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -169,7 +169,7 @@ const HelpRequestForm = ({ isOpen, onClose }) => {
                     ) : (
                       <>
                         <span>🤝</span>
-                        <span>Request Help</span>
+                        <span className="cursor-pointer">Request Help</span>
                       </>
                     )}
                   </span>
