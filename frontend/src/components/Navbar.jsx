@@ -123,6 +123,26 @@ const Navbar = () => {
                 }`}
               ></div>
             </Link>
+            
+            {/* <Link
+              to="/chat"
+              className={`relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 ${
+                isActive("/about")
+                  ? "text-red-300"
+                  : "text-gray-100 hover:text-red-300"
+              }`}
+            >
+              <span className="relative z-10">Chat Room</span>
+              <div
+                className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-red-400 to-red-600 transform transition-transform duration-300 ${
+                  isActive("/about")
+                    ? "scale-x-100"
+                    : "scale-x-0 group-hover:scale-x-100"
+                }`}
+              ></div>
+            </Link> */}
+
+
             <Link
               to="/about"
               className={`relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 ${
@@ -140,6 +160,8 @@ const Navbar = () => {
                 }`}
               ></div>
             </Link>
+
+
 
             {/* Auth Links with Enhanced Styling */}
             <div className="flex items-center space-x-3 ml-4 pl-4 border-l border-red-400/40">
@@ -268,6 +290,43 @@ const Navbar = () => {
                           </span>
                           <svg
                             className="w-4 h-4 ml-auto text-gray-500 group-hover:text-red-400 transform group-hover:translate-x-1 transition-all duration-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </Link>
+                        <Link
+                          to="/chat"
+                          onClick={() => setIsProfileDropdownOpen(false)}
+                          className="flex items-center px-4 py-3 text-sm text-gray-200 hover:text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-yellow-500/10 transition-all duration-300 group relative overflow-hidden"
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 to-yellow-500/0 group-hover:from-orange-500/10 group-hover:to-yellow-500/5 transition-all duration-300"></div>
+                          <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-orange-500 to-yellow-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                          <svg
+                            className="w-5 h-5 mr-3 text-yellow-400 group-hover:text-orange-400 transform group-hover:scale-110 transition-all duration-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8a9 9 0 1118 0z"
+                            />
+                          </svg>
+                          <span className="relative z-10 font-medium">
+                            Chat Room
+                          </span>
+                          <svg
+                            className="w-4 h-4 ml-auto text-gray-500 group-hover:text-orange-400 transform group-hover:translate-x-1 transition-all duration-300"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"

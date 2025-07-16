@@ -11,6 +11,7 @@ import RecentActivity from "./components/RecentActivity";
 import HeroSection from "./components/HeroSection";
 import HelpSection from "./components/HelpSection";
 import AboutUs from "./components/AboutUs";
+import Chat from "./components/Chat";
 import Help from "./components/Help";
 import OfferHelp from "./components/OfferHelp";
 import Report from "./components/Report";
@@ -47,7 +48,8 @@ const AppContent = () => {
             path="/"
             element={<HomePage onLearnMore={handleLearnMore} />}
           />
-          <Route path="/about" element={<AboutUs />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/chat" element={<Chat />} />
           <Route path="/help" element={<Help />} />
           <Route path="/offer-help" element={<OfferHelp />} />
           <Route path="/report" element={<Report />} />
