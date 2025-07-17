@@ -15,6 +15,7 @@ const useNotificationStore = create((set) => ({
       throw error;
     }
   },
+
   markAsRead: async (notificationId) => {
     set({ isMarkingAsRead: true });
     try {
@@ -31,6 +32,7 @@ const useNotificationStore = create((set) => ({
       set({ isMarkingAsRead: false });
     }
   },
+
   markingAllAsRead: async () => {
     set({ isMarkingAllAsRead: true });
     try {

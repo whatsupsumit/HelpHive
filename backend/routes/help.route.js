@@ -14,10 +14,10 @@ const router = express.Router();
 
 router.post("/addhelp", authToken, addHelps);
 router.patch("/resolvehelp/:id", authToken, resolveHelps);
-router.get("/getlimitedhelps", authToken, getLimitedHelps);
-router.get("/getemergencyhelps", authToken, getEmergencyHelps);
+router.get("/getlimitedhelps", getLimitedHelps);
+router.get("/getemergencyhelps", getEmergencyHelps);
 router.get("/getmyhelps", authToken, getMyHelps);
-router.get("/getallhelps", authToken, getAllHelps);
+router.get("/getallhelps", getAllHelps);
 router.get("/gethelp/:id", authToken, getHelp);
 
 export default router;

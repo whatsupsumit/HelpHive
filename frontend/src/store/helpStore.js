@@ -17,7 +17,9 @@ const useHelpStore = create((set) => ({
       toast.success("Help request added successfully!");
     } catch (error) {
       console.error("Error adding help:", error);
-      toast.error("Failed to add help request.");
+      toast.error(
+        "Failed to add help request. You must be logged in to add a help request."
+      );
       throw error;
     } finally {
       set({ isAddingHelp: false });
@@ -41,8 +43,6 @@ const useHelpStore = create((set) => ({
   getLimitedHelps: async () => {
     try {
       const res = await axiosInstance.get("/helps/getLimitedHelps");
-      console.log("Limited Helps Response:", res.data);
-      // Backend returns data directly, not wrapped in { helps: [] }
       set({ limitedHelps: Array.isArray(res.data) ? res.data : [] });
     } catch (error) {
       console.error("Error fetching limited helps:", error);

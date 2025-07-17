@@ -1,5 +1,5 @@
-import express from "express";
 import dotenv from "dotenv";
+import express from "express";
 dotenv.config();
 import connectDB from "./config/mongoose-connection.js";
 import cors from "cors";
@@ -11,7 +11,7 @@ import chatRouter from "./routes/chat.route.js";
 import notificationRouter from "./routes/notification.route.js";
 import cookieParser from "cookie-parser";
 
-const app = express();
+import { app, server } from "./socket.js";
 
 app.use(
   cors({
@@ -62,7 +62,7 @@ app.use("/api/chats", chatRouter);
 app.use("/api/notifications", notificationRouter);
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
 });

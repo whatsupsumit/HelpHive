@@ -95,7 +95,7 @@ export const getLimitedHelps = async (req, res) => {
     })
       .populate("userId")
       .sort({ createdAt: -1 })
-      .limit(10);
+      .limit(3);
 
     return res.status(200).json(helps);
   } catch (error) {
@@ -122,9 +122,7 @@ export const getEmergencyHelps = async (req, res) => {
     const helps = await Help.find({
       isEmergency: true,
       status: "open",
-    })
-      .populate("userId")
-      .sort({ createdAt: -1 });
+    }).sort({ createdAt: -1 });
 
     return res.status(200).json(helps);
   } catch (error) {

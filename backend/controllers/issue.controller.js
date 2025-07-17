@@ -147,7 +147,7 @@ export const getlimitedissues = async (req, res) => {
       .populate("userId")
       .populate("users")
       .sort({ createdAt: -1 })
-      .limit(10);
+      .limit(3);
     return res.status(200).json(issues);
   } catch (error) {
     console.error("Error fetching issues:", error);

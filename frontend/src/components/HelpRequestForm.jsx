@@ -56,7 +56,7 @@ const HelpRequestForm = ({ isOpen, onClose }) => {
               </div>
               <button
                 onClick={onClose}
-                className="text-gray-600 hover:text-orange-700 transition-colors duration-300 text-2xl hover:rotate-90 transition-transform cursor-pointer"
+                className="text-gray-600 hover:text-orange-700 transition-colors duration-300 text-2xl hover:rotate-90 cursor-pointer"
               >
                 ✕
               </button>

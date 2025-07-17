@@ -13,19 +13,24 @@ const useAuthStore = create((set) => ({
     set({ isRegistering: true });
     try {
       const res = await axiosInstance.post("/users/register", data);
-      if (res.data.status === 200) {
+      if (res.status === 200 || res.status === 201) {
         set({ authUser: res.data.user });
         toast.success("Registration successful!");
-        return res.status; // Return 200 on success
+        return res.status;
       } else {
         toast.error(res.data.message || "Registration failed");
-        return null; // Return null on failure
+        return null;
       }
     } catch (error) {
+      // If error response exists and is 400, show backend message
+      if (error.response && error.response.status === 400) {
+        toast.error(error.response.data.message || "Registration failed");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
       console.error("Registration failed:", error);
-      toast.error("Registration failed. Please try again.");
       set({ authUser: null });
-      return null; // Return null on error
+      return null;
     } finally {
       set({ isRegistering: false });
     }

@@ -14,8 +14,8 @@ const router = express.Router();
 router.post("/addissue", authToken, addIssue);
 router.put("/addingissue/:id", authToken, addingIssue);
 router.patch("/resolveissue/:id", authToken, resolveIssue);
-router.get("/getlimitedissues", authToken, getlimitedissues);
-router.get("/getallissues", authToken, getAllIssue);
+router.get("/getlimitedissues", getlimitedissues);
+router.get("/getallissues", getAllIssue);
 router.get("/getissue/:id", authToken, getIssue);
 router.get("/getmyissues", authToken, getMyIssues);
 

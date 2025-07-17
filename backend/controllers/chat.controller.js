@@ -2,6 +2,7 @@ import cloudinary from "../config/cloudinary-config.js";
 import Chat from "../models/chat.model.js";
 import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
+import { getReceiverSocketId, io } from "../socket.js";
 
 export const sendMessage = async (req, res) => {
   try {
@@ -20,10 +21,17 @@ export const sendMessage = async (req, res) => {
         .json({ message: "Cannot send message to yourself" });
     }
 
-    const imageurl = null;
+    let imageurl = null;
     if (image) {
-      const uploadResponse = await cloudinary.uploader.upload(image);
-      imageurl = uploadResponse.secure_url;
+      try {
+        const uploadResponse = await cloudinary.uploader.upload(image, {
+          folder: "chat-images",
+        });
+        imageurl = uploadResponse.secure_url;
+      } catch (err) {
+        console.error("Cloudinary upload error:", err);
+        return res.status(500).json({ message: "Image upload failed" });
+      }
     }
 
     const newMessage = await Chat.create({
@@ -45,6 +53,11 @@ export const sendMessage = async (req, res) => {
 
     if (!newNotification) {
       return res.status(500).json({ message: "Failed to create notification" });
+    }
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
 
     return res

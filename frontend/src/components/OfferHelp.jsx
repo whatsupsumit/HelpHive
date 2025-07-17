@@ -21,10 +21,6 @@ const OfferHelp = () => {
     fetchHelps();
   }, [getEmergencyHelps, getAllHelps]);
 
-  console.log("Auth User:", authUser);
-  console.log("Emergency Helps:", emergencyhelps);
-  console.log("All Helps:", allHelps);
-
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -94,7 +90,9 @@ const OfferHelp = () => {
                   <div className="text-sm text-gray-500">
                     <span>📍 {help.location}</span>
                   </div>
-                  {authUser?._id !== help.userId?._id && (
+                  {((authUser &&
+                    authUser._id !== (help.userId?._id || help.userId)) ||
+                    !authUser) && (
                     <Link
                       to="/chat"
                       className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
