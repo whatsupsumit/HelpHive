@@ -9,7 +9,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import RecentActivity from "./components/RecentActivity";
 import HeroSection from "./components/HeroSection";
-import HelpSection from "./components/HelpSection";
 import AboutUs from "./components/AboutUs";
 import Chat from "./components/Chat";
 import Help from "./components/Help";
@@ -24,7 +23,6 @@ const HomePage = ({ onLearnMore }) => {
   return (
     <>
       <HeroSection onLearnMore={onLearnMore} />
-      <HelpSection />
       <RecentActivity />
     </>
   );
