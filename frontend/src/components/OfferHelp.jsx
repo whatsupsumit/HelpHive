@@ -100,11 +100,14 @@ const OfferHelp = () => {
                     !authUser) && (
                     <Link
                       to="/chat"
-                      onClick={() =>
+                      onClick={() => {
                         useChatStore.setState({
                           selectedContact: help.userId?._id || help.userId,
-                        })
-                      }
+                        });
+                        setTimeout(() => {
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }, 0);
+                      }}
                       className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
                     >
                       Offer Help
@@ -159,11 +162,14 @@ const OfferHelp = () => {
                   {authUser?._id !== help.userId?._id && (
                     <Link
                       to="/chat"
-                      onClick={() =>
+                      onClick={() => {
                         useChatStore.setState({
                           selectedContact: help.userId?._id || help.userId,
-                        })
-                      }
+                        });
+                        setTimeout(() => {
+                          window.scrollTo({ top: 0, behavior: "smooth" });
+                        }, 0);
+                      }}
                       className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
                     >
                       Offer Help

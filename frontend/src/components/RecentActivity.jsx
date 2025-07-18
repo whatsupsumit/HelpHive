@@ -20,8 +20,11 @@ const RecentActivity = () => {
   }, [getLimitedHelps, getLimitedIssues]);
 
   return (
-    <section className="py-16 px-6 sm:px-8 lg:px-12 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-16 px-6 sm:px-8 lg:px-12 relative" style={{ background: "#FFF9ED" }}>
+      {/* Foundation theme orange/yellow overlays */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200" />
+      <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/70 via-orange-200/70 to-orange-300/70" />
+      <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -35,7 +38,7 @@ const RecentActivity = () => {
         {/* Two Boards */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Recently Added Requests Board */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-blue-100/50">
+          <div className="bg-gradient-to-br from-blue-50 via-white to-cyan-50/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-blue-100/40">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">📝</span>
@@ -112,7 +115,7 @@ const RecentActivity = () => {
           </div>
 
           {/* Recently Reported Issues Board */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-red-100/50">
+          <div className="bg-gradient-to-br from-pink-50 via-white to-red-50/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-red-100/40">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
                 <span className="text-2xl">🚨</span>

@@ -21,10 +21,11 @@ const HelpSection = () => {
   return (
     <section
       className="relative py-20 px-6 sm:px-8 lg:px-12"
-      style={{ backgroundColor: "#FFFEF7" }}
+      style={{ background: "#FFF9ED" }}
     >
-      {/* Background overlays for warmth and depth */}
-      <div className="absolute inset-0 bg-gradient-to-r from-yellow-100/20 via-orange-50/10 to-yellow-100/20" />
+      {/* Foundation theme orange/yellow overlays */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-orange-300 to-yellow-200" />
+      <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/70 via-orange-200/70 to-orange-300/70" />
 
       <div className="relative z-10 max-w-6xl mx-auto">
         {/* Section Header */}
@@ -48,7 +49,7 @@ const HelpSection = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Need Support Card */}
           <div className="group relative">
-            <div className="bg-white/90 backdrop-blur-lg rounded-3xl p-8 border border-blue-200/50 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-2xl">
+            <div className="bg-gradient-to-br from-blue-50 via-white to-cyan-50/80 backdrop-blur-lg rounded-3xl p-8 border border-blue-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-blue-100/40">
               <div className="text-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl">🙋‍♀️</span>
@@ -91,7 +92,7 @@ const HelpSection = () => {
 
           {/* Want to Help Card */}
           <div className="group relative">
-            <div className="bg-white/90 backdrop-blur-lg rounded-3xl p-8 border border-orange-200/50 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-2xl">
+            <div className="bg-gradient-to-br from-orange-50 via-white to-red-50/80 backdrop-blur-lg rounded-3xl p-8 border border-orange-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-orange-100/40">
               <div className="text-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl">🤝</span>
@@ -134,7 +135,7 @@ const HelpSection = () => {
 
           {/* Report Issue Card */}
           <div className="group relative">
-            <div className="bg-white/90 backdrop-blur-lg rounded-3xl p-8 border border-purple-200/50 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-2xl">
+            <div className="bg-gradient-to-br from-purple-50 via-white to-pink-50/80 backdrop-blur-lg rounded-3xl p-8 border border-purple-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-purple-100/40">
               <div className="text-center mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl">🚨</span>
