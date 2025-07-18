@@ -48,8 +48,6 @@ const Dashboard = () => {
     fetchMyIssues();
   }, [getMyIssues]);
 
-  console.log("My Issues:", myIssues);
-
   useEffect(() => {
     const fetchNotifications = async () => {
       try {

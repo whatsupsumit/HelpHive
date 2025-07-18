@@ -122,7 +122,9 @@ export const getEmergencyHelps = async (req, res) => {
     const helps = await Help.find({
       isEmergency: true,
       status: "open",
-    }).sort({ createdAt: -1 });
+    })
+      .populate("userId")
+      .sort({ createdAt: -1 });
 
     return res.status(200).json(helps);
   } catch (error) {

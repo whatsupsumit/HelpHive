@@ -110,7 +110,7 @@ const Chat = () => {
     <div className="pt-20 min-h-screen bg-gradient-to-br from-red-100 via-orange-100 to-yellow-100">
       <div className="w-full flex h-[calc(100vh-6rem)] rounded-none shadow-2xl overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-72 bg-gradient-to-br from-gray-900 via-red-900 to-gray-900 text-white flex flex-col shadow-2xl">
+        <aside className="w-72 bg-gradient-to-br from-gray-700 via-red-700 to-gray-800 text-white flex flex-col shadow-2xl">
           {/* Contacts */}
           <div className="flex-1 overflow-y-auto">
             <h4 className="px-6 py-3 text-lg font-semibold text-orange-300">

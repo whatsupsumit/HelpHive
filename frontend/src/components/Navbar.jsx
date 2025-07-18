@@ -124,24 +124,6 @@ const Navbar = () => {
               ></div>
             </Link>
 
-            {/* <Link
-              to="/chat"
-              className={`relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 ${
-                isActive("/about")
-                  ? "text-red-300"
-                  : "text-gray-100 hover:text-red-300"
-              }`}
-            >
-              <span className="relative z-10">Chat Room</span>
-              <div
-                className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-red-400 to-red-600 transform transition-transform duration-300 ${
-                  isActive("/about")
-                    ? "scale-x-100"
-                    : "scale-x-0 group-hover:scale-x-100"
-                }`}
-              ></div>
-            </Link> */}
-
             <Link
               to="/about"
               className={`relative transition-all duration-300 text-lg font-medium group hover:-translate-y-1 ${
@@ -451,6 +433,17 @@ const Navbar = () => {
                 }`}
               >
                 About us
+              </Link>
+              <Link
+                to="/chat"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
+                  isActive("/chat")
+                    ? "text-red-300 bg-red-900/50"
+                    : "text-gray-100 hover:text-red-300 hover:bg-red-900/30"
+                }`}
+              >
+                Chat Room
               </Link>
 
               {/* Mobile Auth Links */}

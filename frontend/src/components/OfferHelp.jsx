@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import useHelpStore from "../store/helpStore";
 import useAuthStore from "../store/userAuth";
 import { Link } from "react-router-dom";
+import useChatStore from "../store/chatStore";
 
 const OfferHelp = () => {
   const { getEmergencyHelps, getAllHelps, emergencyhelps, allHelps } =
@@ -20,6 +21,7 @@ const OfferHelp = () => {
 
     fetchHelps();
   }, [getEmergencyHelps, getAllHelps]);
+  console.log(emergencyhelps, allHelps);
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">
@@ -86,6 +88,9 @@ const OfferHelp = () => {
                     ? `${help.description.substring(0, 100)}...`
                     : help.description}
                 </p>
+                <p className="font-light text-sm text-gray-400 mb-4">
+                  <span>Requested by:</span> {help.userId?.name || "Unknown"}
+                </p>
                 <div className="flex justify-between items-center">
                   <div className="text-sm text-gray-500">
                     <span>📍 {help.location}</span>
@@ -95,6 +100,11 @@ const OfferHelp = () => {
                     !authUser) && (
                     <Link
                       to="/chat"
+                      onClick={() =>
+                        useChatStore.setState({
+                          selectedContact: help.userId?._id || help.userId,
+                        })
+                      }
                       className="bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
                     >
                       Offer Help
@@ -139,6 +149,9 @@ const OfferHelp = () => {
                     ? `${help.description.substring(0, 150)}...`
                     : help.description}
                 </p>
+                <p className="font-light text-sm text-gray-400 mb-2">
+                  <span>Requested by:</span> {help.userId?.name || "Unknown"}
+                </p>
                 <div className="flex justify-between items-center">
                   <div className="text-sm text-gray-500">
                     <span>📍 {help.location}</span>
@@ -146,6 +159,11 @@ const OfferHelp = () => {
                   {authUser?._id !== help.userId?._id && (
                     <Link
                       to="/chat"
+                      onClick={() =>
+                        useChatStore.setState({
+                          selectedContact: help.userId?._id || help.userId,
+                        })
+                      }
                       className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:scale-105 transition-all duration-300 cursor-pointer"
                     >
                       Offer Help
