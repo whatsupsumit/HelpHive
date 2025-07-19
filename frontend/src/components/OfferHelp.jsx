@@ -21,7 +21,6 @@ const OfferHelp = () => {
 
     fetchHelps();
   }, [getEmergencyHelps, getAllHelps]);
-  console.log(emergencyhelps, allHelps);
 
   return (
     <div className="pt-20 min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-100">

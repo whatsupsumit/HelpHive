@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useIssueStore from "../store/issueStore";
 import useAuthStore from "../store/userAuth";
-
+import { GoPlus } from "react-icons/go";
 const Report = () => {
   const { addIssue, isAddingIssue, allIssues, getAllIssues, moreIssue } =
     useIssueStore();
@@ -178,8 +178,11 @@ const Report = () => {
                       ? `${issue.description.substring(0, 100)}...`
                       : issue.description}
                   </p>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-500 mb-2">
                     <span>📍{issue.location}</span>
+                  </div>
+                  <div className="text-sm text-pink-500 font-semibold mt-2">
+                    Reported By : {issue.users.length}
                   </div>
                 </div>
               ))
@@ -483,7 +486,9 @@ const Report = () => {
                         Reported by:
                       </h4>
                       <p className="text-gray-600 text-sm sm:text-base">
-                        {selectedIssue.userId.name}
+                        {selectedIssue.users
+                          .map((user) => user.name)
+                          .join(", ")}
                       </p>
                     </div>
                   )}
@@ -497,12 +502,19 @@ const Report = () => {
                   !selectedIssue.users.find(
                     (user) => user._id === authUser._id
                   ) ? (
-                    <button
-                      onClick={() => handleAddToProfile(selectedIssue._id)}
-                      className="w-full px-6 py-3 bg-gradient-to-r from-red-400 to-pink-400 hover:from-red-500 hover:to-pink-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 cursor-pointer"
-                    >
-                      <span>Add to My Profile</span>
-                    </button>
+                    <>
+                      <h1 className="text-gray-700 text-md mb-2">
+                        Facing the same issue?
+                      </h1>
+                      <button
+                        onClick={() => handleAddToProfile(selectedIssue._id)}
+                        className="w-full px-6 py-3 bg-gradient-to-r from-red-400 to-pink-400 hover:from-red-500 hover:to-pink-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 cursor-pointer"
+                      >
+                        <span>
+                          <GoPlus className="h-6 w-6" />
+                        </span>
+                      </button>
+                    </>
                   ) : (
                     <button
                       onClick={closeDialog}

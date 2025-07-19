@@ -1,6 +1,7 @@
-import React from 'react';
-import { Heart, Users, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
-import { FaGithub } from 'react-icons/fa';
+import React from "react";
+
+import { Heart, Users, Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -8,7 +9,6 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
@@ -18,11 +18,14 @@ const Footer = () => {
               <h3 className="text-2xl font-bold text-gray-800">HelpHive</h3>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Connecting hearts, building communities. Your neighbor's helping hand is just a click away.
+              Connecting hearts, building communities. Your neighbor's helping
+              hand is just a click away.
             </p>
             <div className="flex items-center space-x-2 text-sm text-orange-600">
               <Users className="h-4 w-4" />
-              <span className="font-medium">Building stronger communities across India</span>
+              <span className="font-medium">
+                Building stronger communities across India
+              </span>
             </div>
           </div>
 
@@ -32,10 +35,38 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-2">
-              <li><a href="/" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Home</a></li>
-              <li><a href="/about" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">About Us</a></li>
-              <li><a href="/help" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Get Help</a></li>
-              <li><a href="/report" className="text-gray-600 hover:text-orange-600 transition-colors text-sm">Report Issue</a></li>
+              <li>
+                <a
+                  href="/"
+                  className="text-gray-600 hover:text-orange-600 transition-colors text-sm"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/about"
+                  className="text-gray-600 hover:text-orange-600 transition-colors text-sm"
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/help"
+                  className="text-gray-600 hover:text-orange-600 transition-colors text-sm"
+                >
+                  Get Help
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/report"
+                  className="text-gray-600 hover:text-orange-600 transition-colors text-sm"
+                >
+                  Report Issue
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -61,10 +92,18 @@ const Footer = () => {
                 </div>
                 {/* Social Media Icons */}
                 <div className="flex space-x-3 pt-2">
-                  <a href="https://www.linkedin.com/in/sumitkumarrrr/" target='_blank' className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                  <a
+                    href="https://www.linkedin.com/in/sumitkumarrrr/"
+                    target="_blank"
+                    className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors"
+                  >
                     <Linkedin className="h-4 w-4 text-orange-600" />
                   </a>
-                  <a href="https://github.com/whatsupsumit" target='_blank' className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                  <a
+                    href="https://github.com/whatsupsumit"
+                    target="_blank"
+                    className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors"
+                  >
                     <FaGithub className="h-4 w-4 text-orange-600" />
                   </a>
                 </div>
@@ -85,10 +124,18 @@ const Footer = () => {
                 </div>
                 {/* Social Media Icons */}
                 <div className="flex space-x-3 pt-2">
-                  <a href="https://www.linkedin.com/in/nishantraj1234" target="_blank" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                  <a
+                    href="https://www.linkedin.com/in/nishantraj1234"
+                    target="_blank"
+                    className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors"
+                  >
                     <Linkedin className="h-4 w-4 text-orange-600" />
                   </a>
-                  <a href="https://github.com/NishantRaj278" target="_blank" className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors">
+                  <a
+                    href="https://github.com/NishantRaj278"
+                    target="_blank"
+                    className="bg-orange-100 hover:bg-orange-200 p-2 rounded-full transition-colors"
+                  >
                     <FaGithub className="h-4 w-4 text-orange-600" />
                   </a>
                 </div>
@@ -133,7 +180,7 @@ const Footer = () => {
               <span className="text-orange-500">🇮🇳</span>
             </div>
             <div className="text-sm text-gray-600">
-              © 2024 HelpHive. All rights reserved.
+              © 2025 HelpHive. All rights reserved.
             </div>
           </div>
         </div>
