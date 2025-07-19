@@ -15,6 +15,8 @@ export const generateToken = async (user_id, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
+      secure: true, // Only send cookie over HTTPS
+      sameSite: "none", // Allow cross-site cookies (for frontend-backend on different domains)
       maxAge: 7 * 24 * 60 * 60 * 1000,
       path: "/",
     });
