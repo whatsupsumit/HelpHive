@@ -8,6 +8,9 @@ import {
 } from "../controllers/user.controller.js";
 import { authToken } from "../middlewares/authToken.js";
 const router = express.Router();
+router.get("/", (req, res) => {
+  res.send("User Route");
+});
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
