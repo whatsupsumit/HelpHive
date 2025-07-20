@@ -59,7 +59,7 @@ const useChatStore = create((set, get) => ({
     const { authUser } = useAuthStore.getState();
     if (!authUser || get().socket?.connected) return;
 
-    const socket = io("https://help-hive-api.vercel.app", {
+    const socket = io("http://localhost:3001", {
       query: {
         userId: authUser._id,
       },

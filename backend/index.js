@@ -15,7 +15,7 @@ import { app, server } from "./socket.js";
 
 app.use(
   cors({
-    origin: ["https://help-hivee.vercel.app", "http://localhost:5173"],
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
