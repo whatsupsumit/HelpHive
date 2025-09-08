@@ -13,9 +13,10 @@ import cookieParser from "cookie-parser";
 
 import { app, server } from "./socket.js";
 
+connectDB();
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://helphiive.vercel.app"],
     credentials: true,
   })
 );
@@ -64,5 +65,4 @@ app.use("/api/notifications", notificationRouter);
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  connectDB();
 });
