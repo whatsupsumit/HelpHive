@@ -1,2 +1,0 @@
-# HelpHive
-your friendly 
