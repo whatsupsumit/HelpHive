@@ -178,7 +178,7 @@ const AuthPage = () => {
           </div>
 
           {/* Right Side - Auth Form */}
-          <div className="order-1 lg:order-2 px-4">
+          <div className="order-1 lg:order-2 px-4 mt-20">
             <div className="relative bg-white/5 backdrop-blur-2xl rounded-2xl shadow-2xl border border-white/10 p-6 lg:p-8 max-w-md mx-auto overflow-hidden">
               {/* Form background pattern */}
               <div className="absolute inset-0 opacity-30">
