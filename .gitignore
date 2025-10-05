@@ -1,0 +1,52 @@
+# Node modules
+node_modules/
+.pnp/
+.pnp.js
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.log
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# Environment variables
+.env
+.env.development
+.env.test
+.env.production
+.env.local
+
+# Dependency directories
+jspm_packages/
+
+# Test files
+*.test.js
+*.spec.js
+
+# OS generated files
+Thumbs.db
+
+# Other
+temp/
+tmp/
