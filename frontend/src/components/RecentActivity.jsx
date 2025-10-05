@@ -69,7 +69,7 @@ const RecentActivity = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Need Support Card */}
             <div className="group relative">
-              <div className="bg-gradient-to-br from-blue-50 via-white to-cyan-50/80 backdrop-blur-lg rounded-3xl p-8 border border-blue-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-blue-100/40">
+              <div className="flex flex-col justify-between h-full bg-gradient-to-br from-blue-50 via-white to-cyan-50/80 backdrop-blur-lg rounded-3xl p-8 border border-blue-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-blue-100/40">
                 <div className="text-center mb-6">
                   <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <span className="text-3xl">🙋‍♀️</span>
@@ -112,7 +112,7 @@ const RecentActivity = () => {
 
             {/* Want to Help Card */}
             <div className="group relative">
-              <div className="bg-gradient-to-br from-orange-50 via-white to-red-50/80 backdrop-blur-lg rounded-3xl p-8 border border-orange-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-orange-100/40">
+              <div className=" flex flex-col justify-between h-full bg-gradient-to-br from-orange-50 via-white to-red-50/80 backdrop-blur-lg rounded-3xl p-8 border border-orange-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-orange-100/40">
                 <div className="text-center mb-6">
                   <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <span className="text-3xl">🤝</span>
@@ -157,7 +157,7 @@ const RecentActivity = () => {
 
             {/* Report Issue Card */}
             <div className="group relative">
-              <div className="bg-gradient-to-br from-purple-50 via-white to-pink-50/80 backdrop-blur-lg rounded-3xl p-8 border border-purple-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-purple-100/40">
+              <div className="flex flex-col justify-between  h-full bg-gradient-to-br from-purple-50 via-white to-pink-50/80 backdrop-blur-lg rounded-3xl p-8 border border-purple-100/40 hover:bg-white transition-all duration-500 hover:scale-105 hover:-translate-y-2 shadow-xl hover:shadow-purple-100/40">
                 <div className="text-center mb-6">
                   <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <span className="text-3xl">🚨</span>
