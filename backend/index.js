@@ -16,7 +16,7 @@ import { app, server } from "./socket.js";
 connectDB();
 app.use(
   cors({
-    origin: ["https://helphiive.vercel.app"],
+    origin: true, // Allow same-origin requests for monorepo deployment
     credentials: true,
   })
 );
