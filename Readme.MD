@@ -2,7 +2,7 @@
 
 A community-driven platform that connects people who need help with those willing to offer assistance. Whether it's an emergency situation or general community support, HelpHive makes it easy to reach out and lend a helping hand.
 
-live link: https://helphiive.vercel.app/
+live link: https://helphiveforus.vercel.app/
 
 ## ✨ Features
 
